@@ -9,6 +9,12 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent  {
   title = 'GdG-Frontend';
+
+
+  constructor() {
+    localStorage.setItem('usu_id', '1');
+    localStorage.setItem('usu_token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRpYWdvIiwiaWF0IjoxNzE2MDg2MTc4LCJleHAiOjE3MTYwODk3Nzh9.QwjoDt4kmvut4JpScn26SBJg3WjqcZ5tTjmTS4CkWkQ');
+  }
 }

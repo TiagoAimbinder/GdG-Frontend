@@ -11,12 +11,27 @@ export class ManangementServiceService {
 
   constructor(private http: HttpClient) { }
 
-
   createManangement = async (manangement: any): Promise<Observable<any>> => {
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRpYWdvIiwiaWF0IjoxNzE1NzQwMDI0LCJleHAiOjE3MTU3NDM2MjR9.mCJesj2m4xU3hkeDMNixGNFmZWRBqcImmVtPs_61N8k'}`
+      'Authorization': `Bearer ${localStorage.getItem('usu_token')}`
     });
     const urlApi = environment.const_url_server + endpoints.manangementCreate; 
     return this.http.post(urlApi, manangement, { headers })
+  };
+
+  getAllManangement = async (): Promise<Observable<any>> => {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('usu_token')}`
+    });
+    const urlApi = environment.const_url_server + endpoints.manangementGetAll;
+    return this.http.get(urlApi, { headers })
+  };
+
+  deleteManangement = async (his_id: number): Promise<Observable<any>> => {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('usu_token')}`
+    });
+    const urlApi = `${environment.const_url_server}${endpoints.manangementDelete}/${his_id}`
+    return this.http.delete(urlApi, { headers })
   };
 }
