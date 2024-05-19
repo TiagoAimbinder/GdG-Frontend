@@ -1,5 +1,6 @@
 export enum endpoints {
 
-  manangementCreate = "/manangement/create", 
+  manangementCreate = "/manangement/create",
+  loginUser = "/user/login"
 
 }
