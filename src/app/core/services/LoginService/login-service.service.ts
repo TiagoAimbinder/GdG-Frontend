@@ -12,13 +12,11 @@ export class LoginServiceService {
 
   constructor(private http: HttpClient) { }
 
-  Login = (user: any): Observable<string> => {
+  Login = (user: any): Observable<any> => {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${'WPpJyE1I1ubPrI9yD6U9lCwp29ymUMgO'}`
     });
     const urlApi = environment.const_url_server + endpoints.loginUser; 
-    return this.http.post<string>(urlApi, user, { headers })
-
-
+    return this.http.post<any>(urlApi, user, { headers })
   }
 }

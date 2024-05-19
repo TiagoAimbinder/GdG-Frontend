@@ -4,8 +4,6 @@ import { Router, RouterLink } from '@angular/router';
 import { FormGroup, FormBuilder, ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
 import { LoginServiceService } from 'src/app/core/services/LoginService/login-service.service';
 import Swal from 'sweetalert2';
-import { HttpErrorResponse } from '@angular/common/http';
-
 
 
 @Component({
@@ -26,10 +24,7 @@ export class LoginComponent {
   constructor(private formBuilder: FormBuilder, 
     private router : Router,
     private loginService: LoginServiceService ) {
-    
   };
-
-
 
   private _initForm(): FormGroup<any> {
     return this.formLogin = this.formBuilder.group({
@@ -51,12 +46,9 @@ export class LoginComponent {
 
     this.loginService.Login(user).subscribe({
       next: (Response: any) => {
-        console.log(Response)
-        if (Response.token){
-          localStorage.setItem('token', Response.token)
-          this.router.navigate(['/home'])
-        }
-        console.log(localStorage)
+        localStorage.setItem('usu_token', Response.token);
+        localStorage.setItem('usu_id', Response.usu_id);
+        this.router.navigate(['/inicio']);
       },
       error: (err) => {
         Swal.fire({
@@ -65,11 +57,7 @@ export class LoginComponent {
           icon: 'error',
           confirmButtonText: 'Entendido'
         });
-
-        
       }
-      
-      
     })
 
   }
