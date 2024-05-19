@@ -23,7 +23,9 @@ export class NavbarComponent implements OnInit{
 
   private _getNameByRoute(url: string): string{
     if(url === '/gestion') return 'Ingresos | Egresos';
-    if(url === '/gestion/crear') return 'Crear Ingresos | Egresos';
+    if(url === '/gestion/crear') return 'Crear - Ingresos | Egresos';
+    if(url === '/gestion/historial') return 'Historial - Ingresos | Egresos';
+
     
     return 'Eddie Burguers'
   }
