@@ -34,4 +34,12 @@ export class ManangementServiceService {
     const urlApi = `${environment.const_url_server}${endpoints.manangementDelete}/${his_id}`
     return this.http.delete(urlApi, { headers })
   };
+
+  updateManangement = async (manangement: any, his_id: number, usu_id: number): Promise<Observable<any>> => {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('usu_token')}`
+    });
+    const urlApi = `${environment.const_url_server}${endpoints.manangementUpdate}/${his_id}/${usu_id}`
+    return this.http.put(urlApi, manangement, { headers })
+  };
 }

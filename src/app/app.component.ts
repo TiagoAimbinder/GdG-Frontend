@@ -15,6 +15,6 @@ export class AppComponent  {
 
   constructor() {
     localStorage.setItem('usu_id', '1');
-    localStorage.setItem('usu_token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRpYWdvIiwiaWF0IjoxNzE2MDg2MTc4LCJleHAiOjE3MTYwODk3Nzh9.QwjoDt4kmvut4JpScn26SBJg3WjqcZ5tTjmTS4CkWkQ');
+    localStorage.setItem('usu_token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRpYWdvIiwiaWF0IjoxNzE2MTQzMzAyLCJleHAiOjE3MTYxNDY5MDJ9.uQb0SO80t4qXksMkxXAi0tWOV9vDng7kezuOL4QLBI0');
   }
 }

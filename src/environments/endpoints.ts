@@ -4,6 +4,7 @@ export enum endpoints {
   manangementCreate = "/manangement/create", 
   manangementGetAll = "/manangement/getAll",
   manangementDelete = "/manangement/delete",
+  manangementUpdate = "/manangement/update",
 
   // ---- CurrencyType: 
   getAllCurrencyTypes = "/currency/getAll",

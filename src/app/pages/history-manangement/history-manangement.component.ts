@@ -32,6 +32,15 @@ export class HistoryManangementComponent implements OnInit {
   public movementType: string = 'Movimiento';
   public currencyType: string = 'Moneda';
 
+
+  // ------ Variables - Actualizar Movimiento: 
+  public spanType: string = '';
+  public spanTypeCurrency: string = '';
+  public formManangement: FormGroup = this._initForm();
+  public spinnerLoader: boolean = false; 
+  public showModal: boolean = false;
+  private _manangementSelected: any; 
+
   constructor(private formBuilder: FormBuilder, private manangementService: ManangementServiceService, private userService: UserService, private currencyService: CurrencyService) {
 
   }
@@ -106,12 +115,8 @@ export class HistoryManangementComponent implements OnInit {
     })
   }
 
-  // ---- Method: Search filter  
+  // ---- Filtro para buscar  
   public tableFilter(mt: string, ct: string) {
-    // if (this.formTable.value.searchInput === '' && mt === 'Movimiento' && ct === 'Moneda') {
-    //   this.manangementHistoryFiltered = this.manangementHistory;
-    //   return; 
-    // }
 
     const items = this.manangementHistory.filter( (item:any) => {
 
@@ -204,8 +209,89 @@ export class HistoryManangementComponent implements OnInit {
   };
 
   public onClickModify(his_id: number) {
-
+    this.showModal = true;
+    this._manangementSelected = his_id; 
+    const manangement = this.manangementHistory.find((his: any) => his.his_id === his_id);
+    this.onClickCurrency(manangement.cur_id);
+    this.onClickType(manangement.his_type);
+    this.formManangement.patchValue({
+      his_amount: manangement.his_amount,
+      his_description: manangement.his_description
+    });
   };
+
+  /* ---------------- Actualizar movimiento --------------------- */
+  private _initForm(): FormGroup<any> {
+    return this.formManangement = this.formBuilder.group({
+      his_amount: ['', Validators.required],
+      his_description: ['', Validators.required],
+      cur_id: [null,Validators.required],
+      his_type: [null,Validators.required]
+    })
+  }
+
+  public formatCurrency() {
+    let inputValue = this.formManangement.get('his_amount')!.value;
+    if (inputValue === null) {
+      return; 
+    }
+  
+    inputValue = parseFloat(inputValue).toFixed(2);
+    inputValue = inputValue.replace(',', '.');
+    this.formManangement.patchValue({ his_amount: inputValue }, { emitEvent: false });
+  };
+
+  public onClickCurrency(id: number) {
+    if (id === 1) { this.spanTypeCurrency = "ARS"; }
+    if (id === 2) { this.spanTypeCurrency = "USD"; }  
+    this.formManangement.get('cur_id')?.setValue(id);
+  }; 
+
+  public onClickType(type: string) {
+    this.spanType = type;
+    this.formManangement.get('his_type')?.setValue(type);
+  }
+
+  public onClickCancel() {
+    this.showModal = false;
+    this.formManangement.reset();
+  }
+
+  public async submitForm() {
+
+    this.spinnerLoader = true;
+
+    // Formulario valido
+    if (this.formManangement.valid === false)  return this.spinnerLoader = false, this._alert(2, 'Error', 'Faltan campos por rellenar') ;
+
+    // Número negativo: 
+    if (this.formManangement.value.his_amount <= 0) return this.spinnerLoader = false, this._alert(2, 'Error', 'El monto no puede ser negativo o cero'); 
+
+    const usu_id = Number(localStorage.getItem('usu_id'))
+
+    const manangement = {
+      his_amount: Number(this.formManangement.value.his_amount),
+      his_description: this.formManangement.value.his_description,
+      his_type: this.formManangement.value.his_type,
+      cur_id: this.formManangement.value.cur_id,
+    }
+
+    const result = (await this.manangementService.updateManangement(manangement, this._manangementSelected, usu_id)).subscribe({
+      next: (data) => { 
+        this._alert(1, 'Movimiento actualizado', 'Se actualizo el movimiento correctamente');
+        this.totalAmount = this.currencyTypes.map((cur: Currency) => ({ cur_id: cur.cur_id, cur_name: cur.cur_name, total: 0, }))
+        this._getAllManangement();
+        this.showModal = false;
+        this.spinnerLoader = false;
+      },
+      error: (err) => {
+        this._alert(2, 'Error', 'Error al actualizar el movimiento, intente de nuevo más tarde.');
+        console.error(err);
+        this.spinnerLoader = false;
+      }
+    })
+  }; 
+
 
   private _alert = (type: number, title: string, text: string) => {
     Swal.fire({
