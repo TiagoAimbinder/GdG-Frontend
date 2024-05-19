@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -22,10 +23,10 @@ export class NavbarComponent implements OnInit{
 
 
   private _getNameByRoute(url: string): string{
+    if(url === '/login') return '';
     if(url === '/gestion') return 'Ingresos | Egresos';
     if(url === '/gestion/crear') return 'Crear - Ingresos | Egresos';
     if(url === '/gestion/historial') return 'Historial - Ingresos | Egresos';
-
     
     return 'Eddie Burguers'
   }

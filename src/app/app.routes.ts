@@ -5,6 +5,8 @@ export const routes: Routes = [
   { path: 'gestion', loadComponent: () => import('./pages/buttons-menu/buttons-menu.component').then(m => m.ButtonsMenuComponent) },
   { path: 'gestion/crear', loadComponent: () => import('./pages/create-manangement/create-manangement.component').then(m => m.CreateManangementComponent) },
   { path: 'gestion/historial', loadComponent: () => import('./pages/history-manangement/history-manangement.component').then(m => m.HistoryManangementComponent) },
+  { path: 'login', loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent) },
+
 
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }, 
   { path: '**', redirectTo: 'inicio', pathMatch: 'full' },

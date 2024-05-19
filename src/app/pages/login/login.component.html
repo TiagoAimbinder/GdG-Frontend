@@ -1,0 +1,35 @@
+<main>
+    <section class="login">
+
+        <header class="head">
+            <div>
+                <img src="/assets/img/logo.webp" alt="Logo Eddie" class="loginImg1">
+                <img src="/assets/img/usuario (1).png" alt="usuarioImg" class="loginImg2">
+            </div>
+            <h1 class="loginTitle">LOGIN</h1> 
+            <form [formGroup]="formLogin" action="" class="cont-form">
+                <div class="cont-input">
+                    <span class="text-input">Ingrese Email</span>
+                    <label for="usu_name" class="lb-input">
+                        <i class="ph-light ph-user-circle icon-form"></i>
+                        <input id="usu_name" formControlName="usu_name" name="usu_name" type="string" class="input-form">
+                    </label>
+                </div>
+
+                <div class="cont-input">
+                    <span class="text-input">Ingrese Password</span>
+                    <label for="usu_password" class="lb-input">
+                        <i class="ph-light ph-password icon-form"></i>
+                        <input id="usu_password" formControlName="usu_password" name="usu_password" type="password" class="input-form">
+                    </label>
+                </div>
+
+                <button (click)="submitForm()" class="btn-form">Aceptar</button>
+            </form>
+        </header>
+
+        
+
+    </section>
+</main>
+
