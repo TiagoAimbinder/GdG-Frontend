@@ -1,6 +1,17 @@
 export enum endpoints {
 
-  manangementCreate = "/manangement/create",
-  loginUser = "/user/login"
+  // ---- Login
+  loginUser = "/user/login",
+  
+  // ---- Manangement: 
+  manangementCreate = "/manangement/create", 
+  manangementGetAll = "/manangement/getAll",
+  manangementDelete = "/manangement/delete",
+  manangementUpdate = "/manangement/update",
 
+  // ---- CurrencyType: 
+  getAllCurrencyTypes = "/currency/getAll",
+
+  // Users
+  getAllUsers = "/user/getAll"
 }

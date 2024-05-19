@@ -1,0 +1,112 @@
+<app-navbar/>
+<main>
+  <section class="sect-history">
+    <!-- Filtro de busqueda | Busqueda según descripción -->
+    <form action="" class="form-table" [formGroup]="formTable">
+      <label for="searchFilter" class="cont-input-lb">
+          <i class="ph-bold ph-magnifying-glass icon-btn"></i>
+          <input formControlName="searchInput" id="searchFilter" name="searchFilter" (input)="tableFilter(movementType, currencyType)" class="inp" type="text" placeholder="Filtrar por descripción">
+      </label>    
+    </form>
+
+    <div class="cont-filters">
+      <button (click)="filterType(movementType); this.tableFilter(movementType, currencyType)" class="btn-filter">{{movementType}}</button>
+      <button (click)="filterCurrency(currencyType); this.tableFilter(movementType, currencyType)" class="btn-filter">{{currencyType}}</button>
+    </div>
+
+    <div class="cont-total-amount">
+      <div *ngFor="let total of totalAmount" class="cont-total">
+        <span class="total-amount">${{total.total}} {{total.cur_name}}</span>
+      </div>
+    </div>
+
+    <!-- Container Table -->
+    <div *ngIf="manangementHistoryFiltered.length >= 1" class="cont-table">
+      <table>
+          <tr class="t-row-head">
+              <th>Monto</th>
+              <th>Tipo</th>
+              <th>Descripción</th>
+              <th>Usuario</th>
+              <th>Fecha</th>
+              <th>Acción</th>
+          </tr>
+          <tr *ngFor="let mov of manangementHistoryFiltered.reverse()">
+              <td>$ {{mov.his_amount}} {{returnCurrencyName(mov.cur_id)}}</td>
+              <td>{{mov.his_type}}</td>
+              <td>{{mov.his_description}}</td>
+              <td>{{returnUserName(mov.usu_id)}}</td>
+              <td>{{formatDate(mov.his_date)}}</td>
+              <td class="cont-action"> 
+                <button (click)="onClickModify(mov.his_id)" class="btn-action"><i class="ph-light ph-pencil-simple icon-action"></i></button>
+                <button (click)="onClickDelete(mov.his_id, mov.his_type, mov.his_amount)" class="btn-action"><i class="ph-light ph-trash icon-action"></i></button>
+              </td>
+
+          </tr>
+      </table>
+    </div>
+
+    <div *ngIf="manangementHistoryFiltered.length < 1" class="cont-not-news">
+        <span class="not-movement">No hay movimientos creados.</span>
+    </div>
+  </section>
+</main>
+
+<div *ngIf="showModal === true" class="cont-modal">
+  <form [formGroup]="formManangement" action="" class="cont-form">
+  
+    <div class="cont-input">
+      <span class="text-input">Monto</span>
+      <label for="his_amount" class="lb-input">
+        <i class="ph-light ph-money icon-form"></i>
+        <input (blur)="formatCurrency()" id="his_amount" formControlName="his_amount" name="his_amount" type="number" class="input-form">
+      </label>
+    </div>
+
+    <div class="cont-input">
+      <span class="text-input">Descripción</span>
+      <label for="his_description" class="lb-input">
+        <i class="ph-light ph-chat-text icon-form"></i>
+        <input id="his_description" formControlName="his_description" name="his_description" type="text" class="input-form">
+      </label>
+    </div>
+
+    <div class="cont-input">
+      <span class="text-input">Tipo de moneda</span>
+      <label for="cur_id" class="input-dropdown lb-input">
+        <input id="cur_id"  name="cur_id" type="checkbox" class="input-form input-checkbox">
+        <div class="cont-dropdown">
+          <span (click)="onClickCurrency(cur.cur_id)" *ngFor="let cur of currencyTypes" class="item-dropdown">{{cur.cur_name}}</span>
+        </div>
+        <i class="ph-light ph-coin icon-form"></i>
+        <span class="input-form">{{spanTypeCurrency}}</span>
+        <i class="ph-light ph-caret-down icon-arrow"></i>
+      </label>
+    </div>
+
+    <div class="cont-input">
+      <span class="text-input">Tipo</span>
+      <label for="his_type" class="input-dropdown lb-input">
+        <input id="his_type"  name="his_type" type="checkbox" class="input-form input-checkbox">
+        <div class="cont-dropdown">
+          <span (click)="onClickType('Ingreso')" class="item-dropdown">Ingreso</span>
+          <span (click)="onClickType('Egreso')" class="item-dropdown">Egreso</span>
+        </div>
+        <i class="ph-light ph-arrows-out-line-horizontal icon-form"></i>
+        <span class="input-form">{{spanType}}</span>
+        <i class="ph-light ph-caret-down icon-arrow"></i>
+      </label>
+    </div>
+
+    <div class="cont-btn-form">
+      <button (click)="onClickCancel()" class="btn-form cancel">
+        Cancelar
+      </button>
+
+      <button [disabled]="spinnerLoader === true" (click)="submitForm()" class="btn-form">
+        <span *ngIf="spinnerLoader === false">Aceptar</span>  
+        <span *ngIf="spinnerLoader === true" class="loader"></span>
+      </button>
+    </div>
+  </form>
+</div>

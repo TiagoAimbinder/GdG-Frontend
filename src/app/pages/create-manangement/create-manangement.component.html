@@ -1,5 +1,5 @@
 <app-navbar/>
-<main>
+<main >
   <section class="cont-create">
     <h1 class="title">
       Crear Ingresos | Egresos
@@ -11,17 +11,9 @@
         <span class="text-input">Fecha</span>
         <label for="his_date" class="lb-input">
           <i class="ph-light ph-calendar-dots icon-form"></i>
-          <input [disabled]="true" id="his_date" formControlName="his_date" name="his_date" type="text" class="input-form">
+          <input [disabled]="true" id="his_date" formControlName="his_date" name="his_date" type="text" class="input-form" readonly>
         </label>
       </div>
-
-      <!-- <div class="cont-input">
-        <span class="text-input">Caja</span>
-        <label for="his_date" class="lb-input">
-          <i class="ph-light ph-cash-register icon-form"></i>
-          <input [disabled]="true" id="his_date" formControlName="his_date" name="his_date" type="text" class="input-form">
-        </label>
-      </div> -->
 
       <div class="cont-input">
         <span class="text-input">Monto</span>
@@ -44,8 +36,7 @@
         <label for="cur_id" class="input-dropdown lb-input">
           <input id="cur_id"  name="cur_id" type="checkbox" class="input-form input-checkbox">
           <div class="cont-dropdown">
-            <span (click)="onClickCurrency(1)" class="item-dropdown">ARS</span>
-            <span (click)="onClickCurrency(2)" class="item-dropdown">USD</span>
+            <span (click)="onClickCurrency(cur.cur_id)" *ngFor="let cur of currencyTypes" class="item-dropdown">{{cur.cur_name}}</span>
           </div>
           <i class="ph-light ph-coin icon-form"></i>
           <span class="input-form">{{spanTypeCurrency}}</span>
@@ -67,7 +58,10 @@
         </label>
       </div>
 
-      <button (click)="submitForm()" class="btn-form">Aceptar</button>
+      <button [disabled]="spinnerLoader === true" (click)="submitForm()" class="btn-form">
+        <span *ngIf="spinnerLoader === false">Aceptar</span>
+        <span *ngIf="spinnerLoader === true" class="loader"></span>
+      </button>
     </form>
   </section>
 </main>
