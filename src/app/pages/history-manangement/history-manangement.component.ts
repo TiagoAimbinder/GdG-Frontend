@@ -188,6 +188,7 @@ export class HistoryManangementComponent implements OnInit {
       if (result.isConfirmed) {
         const result = (await this.manangementService.deleteManangement(his_id)).subscribe({
           next: (data) => {
+            this.totalAmount = this.currencyTypes.map((cur: Currency) => ({ cur_id: cur.cur_id, cur_name: cur.cur_name, total: 0,}))
             this._getAllManangement();
             this._alert(1, "Eliminado", "El movimiento ha sido eliminado correctamente.");
           },

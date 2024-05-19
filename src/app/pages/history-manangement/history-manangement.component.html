@@ -20,7 +20,6 @@
       </div>
     </div>
 
-
     <!-- Container Table -->
     <div *ngIf="manangementHistoryFiltered.length >= 1" class="cont-table">
       <table>
@@ -32,7 +31,7 @@
               <th>Fecha</th>
               <th>Acción</th>
           </tr>
-          <tr *ngFor="let mov of manangementHistoryFiltered">
+          <tr *ngFor="let mov of manangementHistoryFiltered.reverse()">
               <td>$ {{mov.his_amount}} {{returnCurrencyName(mov.cur_id)}}</td>
               <td>{{mov.his_type}}</td>
               <td>{{mov.his_description}}</td>
