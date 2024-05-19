@@ -89,8 +89,7 @@ export class CreateManangementComponent implements OnInit {
   }
 
   public onClickCurrency(id: number) {
-    if (id === 1) { this.spanTypeCurrency = "ARS"; }
-    if (id === 2) { this.spanTypeCurrency = "USD"; }  
+    this.spanTypeCurrency = this.currencyTypes.find((currency: any) => currency.cur_id === id).cur_name;
     this.formManangement.get('cur_id')?.setValue(id);
   }; 
 
