@@ -13,5 +13,8 @@ export enum endpoints {
   getAllCurrencyTypes = "/currency/getAll",
 
   // Users
-  getAllUsers = "/user/getAll"
+  getAllUsers = "/user/getAll",
+
+  // ---- Expenses
+  getAllExpenses = '/expenses/getAll',
 }

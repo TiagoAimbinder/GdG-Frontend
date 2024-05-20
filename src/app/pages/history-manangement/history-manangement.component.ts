@@ -31,6 +31,7 @@ export class HistoryManangementComponent implements OnInit {
 
   public movementType: string = 'Movimiento';
   public currencyType: string = 'Moneda';
+  public timeFilter: string = 'Semana';
 
 
   // ------ Variables - Actualizar Movimiento: 
@@ -47,6 +48,7 @@ export class HistoryManangementComponent implements OnInit {
 
   ngOnInit(): void {
     this._getAllCurrencyTypes();
+
   }
 
   private _getAllManangement = async () => {
@@ -55,6 +57,7 @@ export class HistoryManangementComponent implements OnInit {
         this.manangementHistory = data.manangement; 
         this.manangementHistoryFiltered = data.manangement; 
         this._calcTotalAmount();
+        this.tableFilter(this.movementType, this.currencyType, this.timeFilter)
       },
       error: (err) => {
         console.error(err); 
@@ -116,7 +119,16 @@ export class HistoryManangementComponent implements OnInit {
   }
 
   // ---- Filtro para buscar  
-  public tableFilter(mt: string, ct: string) {
+  public tableFilter(mt: string, ct: string, time: string) {
+
+    let startOfWeek: Date;
+    let endOfWeek: Date;
+    
+    if (time === 'Semana') {
+      startOfWeek = this.getStartOfWeek(new Date());
+      endOfWeek = this.getEndOfWeek(new Date());
+    }
+
 
     const items = this.manangementHistory.filter( (item:any) => {
 
@@ -126,14 +138,37 @@ export class HistoryManangementComponent implements OnInit {
       // Filtrar por tipo de moneda:
       const isCurrencyMatch = ct === 'Moneda' ? true : this.currencyTypes.some(cur => cur.cur_name === ct && cur.cur_id === item.cur_id)  
 
-      // Filtrar por fecha:
+      // Filtrar por descripción:
       const isDescriptionMatch = item.his_description.toLowerCase().includes(this.formTable.value.searchInput.toLowerCase());
 
-      return isTypeMatch && isCurrencyMatch && isDescriptionMatch;
+      // Filtrar por fecha dentro de la semana actual:
+      const itemDate = new Date(item.his_date);
+      const isDateMatch = time === 'Todo' || (itemDate >= startOfWeek && itemDate <= endOfWeek);
+
+      return isTypeMatch && isCurrencyMatch && isDescriptionMatch && isDateMatch;
     })
 
     this.manangementHistoryFiltered = items;
   };
+
+  // Función para obtener el lunes de la semana actual:
+  private getStartOfWeek(date: Date): Date {
+    const day = date.getDay(); 
+    const diff = date.getDate() - day + (day === 0 ? -6 : 1); 
+    const startOfWeek = new Date(date);
+    startOfWeek.setDate(diff);
+    startOfWeek.setHours(0, 0, 0, 0); 
+    return startOfWeek;
+  }
+
+  // Función para obtener el domingo de la semana actual:
+  private getEndOfWeek(date: Date): Date {
+    const startOfWeek = this.getStartOfWeek(date);
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
+    endOfWeek.setHours(23, 59, 59, 999); 
+    return endOfWeek;
+  }
 
   public filterType(mt: string) {
     mt === 'Movimiento' ? this.movementType = 'Ingreso' : mt === 'Ingreso' ? this.movementType = 'Egreso' : this.movementType = 'Movimiento';
@@ -145,6 +180,10 @@ export class HistoryManangementComponent implements OnInit {
     if (index === this.currencyTypes.length - 1) return this.currencyType = 'Moneda';
     return this.currencyType = this.currencyTypes[index+1].cur_name;
     
+  };
+
+  public filterTime(time: string) {
+    time === 'Semana' ? this.timeFilter = 'Todo' : this.timeFilter = 'Semana';    
   };
 
   // ---------- END INPUT ---------- 
