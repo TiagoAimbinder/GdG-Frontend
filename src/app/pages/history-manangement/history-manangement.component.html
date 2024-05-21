@@ -5,13 +5,14 @@
     <form action="" class="form-table" [formGroup]="formTable">
       <label for="searchFilter" class="cont-input-lb">
           <i class="ph-bold ph-magnifying-glass icon-btn"></i>
-          <input formControlName="searchInput" id="searchFilter" name="searchFilter" (input)="tableFilter(movementType, currencyType)" class="inp" type="text" placeholder="Filtrar por descripción">
+          <input formControlName="searchInput" id="searchFilter" name="searchFilter" (input)="tableFilter(movementType, currencyType, timeFilter)" class="inp" type="text" placeholder="Filtrar por descripción">
       </label>    
     </form>
 
     <div class="cont-filters">
-      <button (click)="filterType(movementType); this.tableFilter(movementType, currencyType)" class="btn-filter">{{movementType}}</button>
-      <button (click)="filterCurrency(currencyType); this.tableFilter(movementType, currencyType)" class="btn-filter">{{currencyType}}</button>
+      <button (click)="filterType(movementType); this.tableFilter(movementType, currencyType, timeFilter)" class="btn-filter">{{movementType}}</button>
+      <button (click)="filterCurrency(currencyType); this.tableFilter(movementType, currencyType, timeFilter)" class="btn-filter">{{currencyType}}</button>
+      <button (click)="filterTime(timeFilter); this.tableFilter(movementType, currencyType, timeFilter)" class="btn-filter">{{timeFilter}}</button>
     </div>
 
     <div class="cont-total-amount">
