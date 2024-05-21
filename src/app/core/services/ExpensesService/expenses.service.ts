@@ -17,10 +17,14 @@ export class ExpensesService {
     });
     return headers; 
   }
-
   
   getAllExpenses = async (): Promise<Observable<any>> => {
     const urlApi = `${environment.const_url_server}${endpoints.getAllExpenses}/${localStorage.getItem('usu_id')}`
     return this.http.get(urlApi, { headers: this.headers() })
+  };
+
+  deleteExpense = async (exp_id: number): Promise<Observable<any>> => {
+    const urlApi = `${environment.const_url_server}${endpoints.deleteExpense}/${exp_id}/${localStorage.getItem('usu_id')}`
+    return this.http.delete(urlApi, { headers: this.headers() })
   };
 }

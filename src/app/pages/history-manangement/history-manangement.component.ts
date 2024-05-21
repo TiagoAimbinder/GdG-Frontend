@@ -214,7 +214,6 @@ export class HistoryManangementComponent implements OnInit {
       icon: 'warning',
       background: 'var(--secondary-color)',
       color: 'var(--main-color)'
-
     })
 
     Swal.fire({
