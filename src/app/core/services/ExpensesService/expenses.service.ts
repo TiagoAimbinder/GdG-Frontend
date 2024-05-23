@@ -27,4 +27,14 @@ export class ExpensesService {
     const urlApi = `${environment.const_url_server}${endpoints.deleteExpense}/${exp_id}/${localStorage.getItem('usu_id')}`
     return this.http.delete(urlApi, { headers: this.headers() })
   };
+
+  createExpense = async (expense: any): Promise<Observable<any>> => {
+    const urlApi = `${environment.const_url_server}${endpoints.createExpense}`
+    return this.http.post(urlApi, expense, { headers: this.headers() })
+  }
+
+  updateExpense = async (expense: any, exp_id: number): Promise<Observable<any>> => {
+    const urlApi = `${environment.const_url_server}${endpoints.updateExpense}/${exp_id}/${localStorage.getItem('usu_id')}`
+    return this.http.put(urlApi, expense, { headers: this.headers() })
+  }
 }

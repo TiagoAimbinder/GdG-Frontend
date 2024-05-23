@@ -18,11 +18,67 @@
               <td>$ {{exp.exp_amount}}</td>
               <td>$ {{calcVta(exp.exp_amount, exp.exp_percentVta) | number:'1.2-2' }}</td>
               <td class="cont-action"> 
-                <button (click)="onClickModify()" class="btn-action"><i class="ph-light ph-pencil-simple icon-action"></i></button>
+                <button (click)="onClickModify(exp.exp_id)" class="btn-action"><i class="ph-light ph-pencil-simple icon-action"></i></button>
                 <button (click)="onClickDelete(exp.exp_id, exp.exp_name)" class="btn-action"><i class="ph-light ph-trash icon-action"></i></button>
               </td>
           </tr>
       </table>
     </div>
+
+    <div class="cont-btn">
+      <button (click)="onClickCreate()" class="btn-add"><i class="ph ph-plus icon-add"></i></button>
+    </div>
+
+    <!--------- Crear ---------->
+    <div *ngIf="showModal === true" class="cont-modal">
+      <form [formGroup]="formExpense" action="" class="cont-form">
+    
+        <div class="cont-input">
+          <span class="text-input">Nombre</span>
+          <label for="exp_name" class="lb-input">
+            <i class="ph-light ph-chat-text icon-form"></i>
+            <input id="exp_name" formControlName="exp_name" name="exp_name" type="text" class="input-form">
+          </label>
+        </div>
+    
+    
+        <div class="cont-input">
+          <span class="text-input">Porcentaje</span>
+          <label for="exp_percentVta" class="lb-input">
+            <i class="ph ph-percent icon-form"></i>
+            <input id="exp_percentVta" formControlName="exp_percentVta" name="exp_percentVta" type="number" class="input-form">
+          </label>
+        </div>
+    
+        <div class="cont-input">
+          <span class="text-input">Precio</span>
+          <label for="exp_amount" class="lb-input">
+            <i class="ph-light ph-money icon-form"></i>
+            <input (blur)="formatCurrency()" id="exp_amount" formControlName="exp_amount" name="exp_amount" type="number" class="input-form">
+          </label>
+        </div>
+    
+        <div class="cont-btn-form">
+          <button (click)="onClickCancel()" class="btn-form cancel">
+            Cancelar
+          </button>
+    
+          <button *ngIf="modifyModal===true" [disabled]="spinnerLoader === true" (click)="submitForm(2)" class="btn-form">
+            <span *ngIf="spinnerLoader === false">Aceptar</span>  
+            <span *ngIf="spinnerLoader === true" class="loader"></span>
+          </button>
+
+          <button *ngIf="modifyModal===false" [disabled]="spinnerLoader === true" (click)="submitForm(1)" class="btn-form">
+            <span *ngIf="spinnerLoader === false">Aceptar</span>  
+            <span *ngIf="spinnerLoader === true" class="loader"></span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- End crear -->
+
   </section>
 </main>
+
+
