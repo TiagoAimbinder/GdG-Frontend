@@ -7,6 +7,7 @@ export const routes: Routes = [
   { path: 'gestion/historial', loadComponent: () => import('./pages/history-manangement/history-manangement.component').then(m => m.HistoryManangementComponent) },
   { path: 'categoria/:exp_id', loadComponent: () => import('./pages/expenses/expenses.component').then(m => m.ExpensesComponent)},
   { path: 'login', loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent) },
+  { path: 'categoria', loadComponent: () => import('./pages/categories/categories.component').then(m => m.CategoriesComponent)},
 
 
 
