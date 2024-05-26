@@ -9,9 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CategoriesService {
 
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(private http: HttpClient) { }
 
   private headers(): HttpHeaders {
     const headers = new HttpHeaders({
@@ -20,8 +18,26 @@ export class CategoriesService {
     return headers; 
   }
 
+  createCategories = async (categories: any) : Promise<Observable<any>> => {
+    const urlApi = environment.const_url_server + endpoints.createCategories; 
+    return this.http.post(urlApi, categories, { headers: this.headers() });
+  }
+
   getAllCategories = async(): Promise<Observable<any>> =>  { 
     const urlApi = `${environment.const_url_server}${endpoints.getAllCategories}/${localStorage.getItem('usu_id')}`
-    return this.http.get(urlApi, {headers: this.headers()})
+    return this.http.get(urlApi, {headers: this.headers() })
   }
+  
+   updateCategory = async ( categories: any, cat_id: number,  usu_id: number): Promise<Observable<any>> => {
+    const urlApi = `${environment.const_url_server}${endpoints.updateCategories}/${cat_id}/${usu_id}`; // Agrega el usu_id a la URL
+    return this.http.put(urlApi, categories, { headers: this.headers() });
+  };
+
+  deleteCategory = async (cat_id: number): Promise<Observable<any>> => {
+    const urlApi = `${environment.const_url_server}${endpoints.deleteCategories}/${cat_id}`
+    return this.http.delete(urlApi, { headers: this.headers() })
+  };
+
 }
+
+

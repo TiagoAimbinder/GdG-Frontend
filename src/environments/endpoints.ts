@@ -12,6 +12,13 @@ export enum endpoints {
   // ---- CurrencyType: 
   getAllCurrencyTypes = "/currency/getAll",
 
+  //---- Category
+  getAllCategories = '/category/getAll',
+  deleteCategories = '/category/delete',
+  createCategories = '/category/create',
+  updateCategories = '/category/update',
+
+
   // Users
   getAllUsers = "/user/getAll",
 
