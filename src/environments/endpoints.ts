@@ -24,4 +24,11 @@ export enum endpoints {
 
   // ---- Expenses
   getAllExpenses = '/expenses/getAll',
+  deleteExpense = '/expenses/delete',
+  createExpense = '/expenses/create',
+  updateExpense = '/expenses/update',
+
+
+  // ---- Categories 
+  getAllCategories = '/category/getAll'
 }
