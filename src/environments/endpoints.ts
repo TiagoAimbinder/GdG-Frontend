@@ -12,15 +12,15 @@ export enum endpoints {
   // ---- CurrencyType: 
   getAllCurrencyTypes = "/currency/getAll",
 
-  //---- Category
+  // ---- Categories 
   getAllCategories = '/category/getAll',
   deleteCategories = '/category/delete',
   createCategories = '/category/create',
   updateCategories = '/category/update',
 
-
-  // Users
+  // ---- Users
   getAllUsers = "/user/getAll",
+  validateToken = "/user/validateToken", 
 
   // ---- Expenses
   getAllExpenses = '/expenses/getAll',
@@ -29,6 +29,4 @@ export enum endpoints {
   updateExpense = '/expenses/update',
 
 
-  // ---- Categories 
-  getAllCategories = '/category/getAll'
 }

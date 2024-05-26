@@ -18,4 +18,17 @@ export class UserService {
     const urlApi = environment.const_url_server + endpoints.getAllUsers;
     return this.http.get(urlApi, {headers});
   }
+
+  validateToken(usu_id: number, usu_token: string | null) {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${usu_token}`
+    });
+
+    const params = {
+      usu_id: usu_id
+    }
+
+    const urlApi = environment.const_url_server + endpoints.validateToken;
+    return this.http.post(urlApi, params, { headers });
+  }; 
 }

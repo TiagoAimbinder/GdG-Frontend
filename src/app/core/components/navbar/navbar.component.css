@@ -6,6 +6,7 @@ header {
   padding: 14px 20px;
   border-bottom: 1px solid var(--main-color);
   height: 70px;
+  position: relative;
 }
 
 .header-title {
@@ -74,3 +75,43 @@ transform: scaleY(0);
 input[type="checkbox"]:checked ~ .hamburger-lines .line3 {
 transform: rotate(-45deg);
 }
+
+
+/* -------------- SIDEBAR ----------------- */
+
+.cont-side {
+  position: absolute;
+  background-color: #131313e1;
+  width: 100vw;
+  height: calc(100vh - 70px);
+  top: 70px;
+  left: 0px;
+  transition: .3s;
+  transform: translate(-5000px);
+  z-index: 4000;
+}
+
+input[type="checkbox"]:checked ~ .cont-side {
+  transform: translate(0px);
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0;
+  list-style: none;
+  padding: 40px;
+}
+
+.item {
+  color: var(--light-color);
+  font-size: 20px;
+  padding: 12px 20px;
+}
+
+.item:hover {
+  background-color: var(--main-color);
+  border-radius: 4px;
+}
+

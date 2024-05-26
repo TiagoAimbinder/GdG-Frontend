@@ -12,7 +12,7 @@
                         <td>{{cat.cat_id}}</td>
                         <td>{{ cat.cat_name.length > 15 ? cat.cat_name.substring(0, 15) + '...' : cat.cat_name }}</td>
                         <td class="cont-action"> 
-                            <button (click)="onClickCategory" class="btn-action"><i class="ph-light ph-arrow-fat-right icon-action"></i></button>
+                            <button routerLink="/categoria/{{cat.cat_id}}" class="btn-action"><i class="ph-light ph-arrow-fat-right icon-action"></i></button>
                             <button (click)="onClickDelete(cat.cat_id, cat.cat_name)" class="btn-action"><i class="ph-light ph-trash icon-action"></i></button>
                             <button (click)="onClickModify(cat.cat_id)" class="btn-action"><i class="ph-light ph-pencil-simple icon-action"></i></button>
                                 
@@ -21,7 +21,10 @@
             </table>
             
         </div>
-        <button (click)="onClickAddCategory()" class="btn-add"><i class="ph-light ph-rows-plus-bottom icon-add"></i></button>
+
+        <div class="cont-btn-add">
+            <button (click)="onClickAddCategory()" class="btn-add"><i class="ph-light ph-rows-plus-bottom icon-add"></i></button>
+        </div>
     </section>
 </main>
 

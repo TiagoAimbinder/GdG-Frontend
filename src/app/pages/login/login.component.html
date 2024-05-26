@@ -2,14 +2,15 @@
     <section class="login">
 
         <header class="head">
-            <div>
+            <div class="cont-imgs">
                 <img src="/assets/img/logo.webp" alt="Logo Eddie" class="loginImg1">
-                <img src="/assets/img/usuario (1).png" alt="usuarioImg" class="loginImg2">
+                <!-- <img src="/assets/img/usuario (1).png" alt="usuarioImg" class="loginImg2"> -->
             </div>
-            <h1 class="loginTitle">LOGIN</h1> 
+
+            <h1 class="loginTitle">Iniciar sesión</h1> 
             <form [formGroup]="formLogin" action="" class="cont-form">
                 <div class="cont-input">
-                    <span class="text-input">Ingrese Email</span>
+                    <span class="text-input">Ingrese su email</span>
                     <label for="usu_name" class="lb-input">
                         <i class="ph-light ph-user-circle icon-form"></i>
                         <input id="usu_name" formControlName="usu_name" name="usu_name" type="text" class="input-form">
@@ -17,7 +18,7 @@
                 </div>
 
                 <div class="cont-input">
-                    <span class="text-input">Ingrese Password</span>
+                    <span class="text-input">Ingrese su contraseña</span>
                     <label for="usu_password" class="lb-input">
                         <i class="ph-light ph-password icon-form"></i>
                         <input id="usu_password" formControlName="usu_password" name="usu_password" type="password" class="input-form">

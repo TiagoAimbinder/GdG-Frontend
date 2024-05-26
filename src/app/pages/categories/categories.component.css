@@ -6,7 +6,6 @@ main {
   }
 
 .title {
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: var(--light-color);
   text-align: center;
   margin: 32px auto ; 
@@ -56,22 +55,30 @@ main {
   margin-left: 15px;
 }
 
+.cont-btn-add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+
+}
+
 .btn-add{
-  background-color: orange;
+  background-color: var(--main-color);
   border: 1px solid var(--main-color);
-  border-radius: 40px;
-  padding: 10px 10px;
-  margin: 20px;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.icon-add {
+  color: var(--light-color);
+  font-size: 30px;
+
 }
 
 .icon-action {
   color: var(--light-color);
   font-size: 20px;
-}
-
-.icon-add {
-  color: black;
-  font-size: 40px;
 }
 
 .cont-modal {

@@ -28,13 +28,13 @@ export class CategoriesService {
     return this.http.get(urlApi, {headers: this.headers() })
   }
   
-   updateCategory = async ( categories: any, cat_id: number,  usu_id: number): Promise<Observable<any>> => {
-    const urlApi = `${environment.const_url_server}${endpoints.updateCategories}/${cat_id}/${usu_id}`; // Agrega el usu_id a la URL
+  updateCategory = async ( categories: any, cat_id: number,  usu_id: number): Promise<Observable<any>> => {
+    const urlApi = `${environment.const_url_server}${endpoints.updateCategories}/${cat_id}/${usu_id}`; 
     return this.http.put(urlApi, categories, { headers: this.headers() });
   };
 
   deleteCategory = async (cat_id: number): Promise<Observable<any>> => {
-    const urlApi = `${environment.const_url_server}${endpoints.deleteCategories}/${cat_id}`
+    const urlApi = `${environment.const_url_server}${endpoints.deleteCategories}/${cat_id}/${localStorage.getItem('usu_id')}`
     return this.http.delete(urlApi, { headers: this.headers() })
   };
 

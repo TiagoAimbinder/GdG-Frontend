@@ -4,11 +4,12 @@ import { NavbarComponent } from 'src/app/core/components/navbar/navbar.component
 import { FormsModule, ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { CategoriesService } from 'src/app/core/services/CategoriesService/categories.service';
 import Swal from 'sweetalert2';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [CommonModule, NavbarComponent, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, NavbarComponent, ReactiveFormsModule, FormsModule, NgFor, RouterLink],
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.css']
 })
@@ -104,22 +105,15 @@ export class CategoriesComponent implements OnInit{
   }
 
   private _getAllCategories = async () => {
-    const usu_id = localStorage.getItem('usu_id');
-    if (usu_id) {
-      (await this.categoriesService.getAllCategories(usu_id)).subscribe({
-        next: (data) => {
-          // Ajusta esta línea para extraer el array de categorías del objeto de respuesta
-          this.categories = data.categories;
-        },
-        error: (err) => {
-          console.error('Error fetching categories:', err);
-          this.categories = [];
-        }
-      });
-    } else {
-      console.error('User ID not found in local storage.');
-      this.categories = [];
-    }
+    (await this.categoriesService.getAllCategories()).subscribe({
+      next: (data) => {
+        this.categories = data.categories;
+      },
+      error: (err) => {
+        console.error('Error fetching categories:', err);
+        this.categories = [];
+      }
+    });
   }
 
   onClickCategory() {
@@ -128,14 +122,30 @@ export class CategoriesComponent implements OnInit{
   
   onClickDelete(cat_id: number, cat_name: string){
     Swal.fire({
-      icon: 'warning',
+      title: "¿Estás seguro?",
+      text: `Estás por eliminar la categoría ${cat_name}`,
+      icon: "warning",
       background: 'var(--secondary-color)',
-      color: 'var(--main-color)'
-
-    })
-
-    
-
+      color: 'var(--light-color)',
+      showCancelButton: true,
+      confirmButtonText: "Eliminar",
+      confirmButtonColor: 'var(--main-color)',
+      cancelButtonText: "Cancel",
+      reverseButtons: true
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const result = (await this.categoriesService.deleteCategory(cat_id)).subscribe({
+          next: (data) => {
+            this._getAllCategories();
+            this._alert(1, "Eliminado", "La categoría ha sido eliminada.");
+          },
+          error: (err) => {
+            console.error('Error al eliminar la categoría: ', err);
+            this._alert(2, "Error", "Error al intentar eliminar la categoría, intente más tarde");
+          }
+        })
+      }
+    });
   }
 
   onClickModify(cat_id: number){

@@ -18,7 +18,6 @@ export class LoginComponent {
   public name: string = '';
   public password: string = '';
 
-
   public formLogin:FormGroup = this._initForm();
 
   constructor(private formBuilder: FormBuilder, 
@@ -52,6 +51,9 @@ export class LoginComponent {
       },
       error: (err) => {
         Swal.fire({
+          background: 'var(--secondary-color)',
+          color: 'var(--light-color)',
+          confirmButtonColor: 'var(--main-color)',
           title: 'Error de inicio de sesión',
           text: 'Usuario o contraseña incorrectos. Por favor, verifica tus credenciales.',
           icon: 'error',

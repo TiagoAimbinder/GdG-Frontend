@@ -6,6 +6,8 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginGuard } from './core/guards/login.guard';
+import { PanelGuard } from './core/guards/panel.guard';
 
 
 // Scroll to top - Navbar sections changes: 
@@ -18,6 +20,8 @@ const inMemoryScrollingFeature: InMemoryScrollingFeature = withInMemoryScrolling
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    LoginGuard,
+    PanelGuard,
     provideRouter(routes, inMemoryScrollingFeature, withPreloading(PreloadAllModules)),
     provideClientHydration(), // SSR (Server Side Rendering)
     importProvidersFrom(HttpClientModule,BrowserAnimationsModule),
