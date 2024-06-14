@@ -26,9 +26,13 @@ export class LoginGuard implements CanActivate {
         if (res.valid) {
           return true;
         };
+        localStorage.clear();
+        this.router.navigate(['/login'])
         return false;
       }),
       catchError( (err) => {
+        localStorage.clear();
+        this.router.navigate(['/login'])
         return of(false);
       })
     )

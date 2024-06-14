@@ -10,7 +10,7 @@
             <h1 class="loginTitle">Iniciar sesión</h1> 
             <form [formGroup]="formLogin" action="" class="cont-form">
                 <div class="cont-input">
-                    <span class="text-input">Ingrese su email</span>
+                    <span class="text-input">Ingrese su nombre de usuario</span>
                     <label for="usu_name" class="lb-input">
                         <i class="ph-light ph-user-circle icon-form"></i>
                         <input id="usu_name" formControlName="usu_name" name="usu_name" type="text" class="input-form">
@@ -25,7 +25,7 @@
                     </label>
                 </div>
 
-                <button (click)="submitForm()" class="btn-form">Aceptar</button>
+                <button (click)="submitForm()" class="btn-form" [disabled]="btndisabled === true" >Aceptar</button>
             </form>
         </header>
 

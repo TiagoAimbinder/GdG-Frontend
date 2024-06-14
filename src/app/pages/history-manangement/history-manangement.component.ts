@@ -306,9 +306,14 @@ export class HistoryManangementComponent implements OnInit {
 
     const usu_id = Number(localStorage.getItem('usu_id'))
 
+    const userName = this.returnUserName(usu_id);
+
+    const currentDescription = this.formManangement.value.his_description;
+    const updatedDescription = `${currentDescription} (Modificado por: ${userName})`;
+
     const manangement = {
       his_amount: Number(this.formManangement.value.his_amount),
-      his_description: this.formManangement.value.his_description,
+      his_description: updatedDescription,
       his_type: this.formManangement.value.his_type,
       cur_id: this.formManangement.value.cur_id,
     }

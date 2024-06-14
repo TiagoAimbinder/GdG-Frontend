@@ -18,6 +18,8 @@ export class LoginComponent {
   public name: string = '';
   public password: string = '';
 
+  public btndisabled: boolean = false;
+
   public formLogin:FormGroup = this._initForm();
 
   constructor(private formBuilder: FormBuilder, 
@@ -33,8 +35,23 @@ export class LoginComponent {
   }
 
   public async submitForm() {
-    if (this.formLogin.value === "INVALID") {
+
+    this.btndisabled = true;
+
+    if (this.formLogin.valid === false) {
       console.log("Formulario Invalido");
+      this.btndisabled = false;
+
+      Swal.fire({
+        background: 'var(--secondary-color)',
+        color: 'var(--light-color)',
+        confirmButtonColor: 'var(--main-color)',
+        title: 'Error de inicio de sesión',
+        text: 'Faltan campos por rellenar',
+        icon: 'error',
+        confirmButtonText: 'Entendido'
+      });
+
       return
     }
 
@@ -45,11 +62,13 @@ export class LoginComponent {
 
     this.loginService.Login(user).subscribe({
       next: (Response: any) => {
+        this.btndisabled = false;
         localStorage.setItem('usu_token', Response.token);
         localStorage.setItem('usu_id', Response.usu_id);
         this.router.navigate(['/inicio']);
       },
       error: (err) => {
+        this.btndisabled = false;
         Swal.fire({
           background: 'var(--secondary-color)',
           color: 'var(--light-color)',
@@ -61,6 +80,7 @@ export class LoginComponent {
         });
       }
     })
+
 
   }
 
