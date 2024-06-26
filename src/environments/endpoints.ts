@@ -9,6 +9,16 @@ export enum endpoints {
   manangementDelete = "/manangement/delete",
   manangementUpdate = "/manangement/update",
 
+    // ---- ManangementWeek: 
+  manangementWeekCreate = "/manangementweek/create", 
+  manangementWeekGetAll = "/manangementweek/getAll",
+  manangementWeekDelete = "/manangementweek/delete",
+  manangementWeekUpdate = "/manangementweek/update",
+  manangementWeekMigrate = "/manangementweek/migrate",
+
+
+
+
   // ---- CurrencyType: 
   getAllCurrencyTypes = "/currency/getAll",
 

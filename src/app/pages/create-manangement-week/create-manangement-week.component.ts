@@ -5,16 +5,16 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { ManangementServiceService } from 'src/app/core/services/ManangementService/manangement-service.service';
 import Swal from 'sweetalert2';
 import { CurrencyService } from 'src/app/core/services/CurrencyService/currency.service';
+import { ManangementWeekService } from 'src/app/core/services/ManangementWeekService/manangement-week.service';
 
 @Component({
-  selector: 'app-create-manangement',
+  selector: 'app-create-manangement-week',
   standalone: true,
-  imports: [CommonModule, NavbarComponent, ReactiveFormsModule, FormsModule, NgFor],
-  templateUrl: './create-manangement.component.html',
-  styleUrls: ['./create-manangement.component.css']
+  imports: [CommonModule, NavbarComponent, FormsModule, ReactiveFormsModule, NgFor],
+  templateUrl: './create-manangement-week.component.html',
+  styleUrls: ['./create-manangement-week.component.css']
 })
-export class CreateManangementComponent implements OnInit {
-
+export class CreateManangementWeekComponent implements OnInit {
   public spanType: string = '';
   public spanTypeCurrency: string = '';
   public formManangement: FormGroup = this._initForm();
@@ -24,7 +24,7 @@ export class CreateManangementComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder, 
-    private manangementService: ManangementServiceService, 
+    private manangementService: ManangementWeekService, 
     private currencyService: CurrencyService) {};
 
   ngOnInit(): void {
@@ -33,11 +33,11 @@ export class CreateManangementComponent implements OnInit {
   
   private _initForm(): FormGroup<any> {
     return this.formManangement = this.formBuilder.group({
-      his_date: [this._formatDate(), Validators.required],
-      his_amount: ['', Validators.required],
-      his_description: ['', Validators.required],
+      hw_date: [this._formatDate(), Validators.required],
+      hw_amount: ['', Validators.required],
+      hw_description: ['', Validators.required],
       cur_id: [null,Validators.required],
-      his_type: [null,Validators.required]
+      hw_type: [null,Validators.required]
     })
   }
 
@@ -49,15 +49,15 @@ export class CreateManangementComponent implements OnInit {
     if (this.formManangement.valid === false)  return this.spinnerLoader = false, this._alert(2, 'Error', 'Faltan campos por rellenar') ;
 
     // Número negativo: 
-    if (this.formManangement.value.his_amount <= 0) return this.spinnerLoader = false, this._alert(2, 'Error', 'El monto no puede ser negativo o cero'); 
+    if (this.formManangement.value.hw_amount <= 0) return this.spinnerLoader = false, this._alert(2, 'Error', 'El monto no puede ser negativo o cero'); 
 
     const usu_id = Number(localStorage.getItem('usu_id'))
 
     const manangement = {
-      his_date: this.fecha,
-      his_amount: Number(this.formManangement.value.his_amount),
-      his_description: this.formManangement.value.his_description,
-      his_type: this.formManangement.value.his_type === 1 ? "Ingreso" : "Egreso",
+      hw_date: this.fecha,
+      hw_amount: Number(this.formManangement.value.hw_amount),
+      hw_description: this.formManangement.value.hw_description,
+      hw_type: this.formManangement.value.hw_type === 1 ? "Ingreso" : "Egreso",
       cur_id: this.formManangement.value.cur_id,
       usu_id: usu_id,
     }
@@ -66,7 +66,7 @@ export class CreateManangementComponent implements OnInit {
       next: (data) => { 
         this._alert(1, 'Movimiento creado', 'Se creo el movimiento correctamente');
         this.spinnerLoader = false;
-        this._resetForm();
+        this._resetForm()
       },
       error: (err) => {
         this._alert(2, 'Error', 'Error al crear el movimiento, intente de nuevo más tarde.');
@@ -86,7 +86,7 @@ export class CreateManangementComponent implements OnInit {
   public onClickType(type: number) {
     if (type === 1) { this.spanType = "Ingreso"; }
     if (type === 2) { this.spanType = "Egreso"; }
-    this.formManangement.get('his_type')?.setValue(type);
+    this.formManangement.get('hw_type')?.setValue(type);
   }
 
   public onClickCurrency(id: number) {
@@ -95,14 +95,14 @@ export class CreateManangementComponent implements OnInit {
   }; 
 
   public formatCurrency() {
-    let inputValue = this.formManangement.get('his_amount')!.value;
+    let inputValue = this.formManangement.get('hw_amount')!.value;
     if (inputValue === null) {
       return; 
     }
   
     inputValue = parseFloat(inputValue).toFixed(2);
     inputValue = inputValue.replace(',', '.');
-    this.formManangement.patchValue({ his_amount: inputValue }, { emitEvent: false });
+    this.formManangement.patchValue({ hw_amount: inputValue }, { emitEvent: false });
   };
 
   private _getAllCurrency = async () => {
@@ -119,11 +119,11 @@ export class CreateManangementComponent implements OnInit {
 
   private _resetForm() {
     this.formManangement.reset({
-      his_date: this._formatDate(),
-      his_amount: '',
-      his_description: '',
+      hw_date: this._formatDate(),
+      hw_amount: '',
+      hw_description: '',
       cur_id: null,
-      his_type: null
+      hw_type: null
     });
     this.spanType = '';
     this.spanTypeCurrency = '';
@@ -139,4 +139,5 @@ export class CreateManangementComponent implements OnInit {
       confirmButtonColor: "var(--main-color)",
     });
   }
+
 }

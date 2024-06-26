@@ -8,7 +8,7 @@
           <tr class="t-row-head">
               <th>Insumo</th>
               <th>% Venta</th>
-              <th>Unidad</th>
+              <th>Costo</th>
               <th>Precio venta</th>
               <th>Acción</th>
           </tr>
@@ -21,8 +21,17 @@
                 <button (click)="onClickModify(exp.exp_id)" class="btn-action"><i class="ph-light ph-pencil-simple icon-action"></i></button>
                 <button (click)="onClickDelete(exp.exp_id, exp.exp_name)" class="btn-action"><i class="ph-light ph-trash icon-action"></i></button>
               </td>
-          </tr>
+          </tr>         
       </table>
+    </div>
+
+    <div class="cont-stats">
+        <span class="text-stats">
+          Total Precio Costo: ${{totalCost | number:'1.2-2'}}
+        </span>
+        <span class="text-stats">
+          Total Precio Venta: ${{totalAmount | number:'1.2-2'}}
+        </span>
     </div>
 
     <div class="cont-btn">

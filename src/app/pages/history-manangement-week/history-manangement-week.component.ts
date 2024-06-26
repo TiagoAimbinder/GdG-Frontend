@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
 import { NavbarComponent } from 'src/app/core/components/navbar/navbar.component';
-import { ManangementServiceService } from 'src/app/core/services/ManangementService/manangement-service.service';
 import Swal from 'sweetalert2';
 import { UserService } from 'src/app/core/services/UserService/user.service';
 import { CurrencyService } from 'src/app/core/services/CurrencyService/currency.service';
 import { Currency, CurrencyTotal } from 'src/app/core/models/currency.models';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ManangementWeekService } from 'src/app/core/services/ManangementWeekService/manangement-week.service';
 
 @Component({
-  selector: 'app-history-manangement',
+  selector: 'app-history-manangement-week',
   standalone: true,
   imports: [CommonModule, NavbarComponent, FormsModule, ReactiveFormsModule, NgIf],
-  templateUrl: './history-manangement.component.html',
-  styleUrls: ['./history-manangement.component.css']
+  templateUrl: './history-manangement-week.component.html',
+  styleUrls: ['./history-manangement-week.component.css']
 })
-export class HistoryManangementComponent implements OnInit {
+export class HistoryManangementWeekComponent implements OnInit {
 
   public manangementHistory: any[] = [];
   public manangementHistoryFiltered: any[] = [];
@@ -42,22 +42,22 @@ export class HistoryManangementComponent implements OnInit {
   public showModal: boolean = false;
   private _manangementSelected: any; 
 
-  constructor(private formBuilder: FormBuilder, private manangementService: ManangementServiceService, private userService: UserService, private currencyService: CurrencyService) {
+  constructor(private formBuilder: FormBuilder, private manangementService: ManangementWeekService, private userService: UserService, private currencyService: CurrencyService) {
 
   }
 
   ngOnInit(): void {
     this._getAllCurrencyTypes();
-
   }
 
   private _getAllManangement = async () => {
     (await this.manangementService.getAllManangement()).subscribe({
       next: (data) => {
         this.manangementHistory = data.manangement; 
-        this.manangementHistoryFiltered = data.manangement; 
+        this.manangementHistoryFiltered = data.manangement;
         this._calcTotalAmount();
-        this.tableFilter(this.movementType, this.currencyType, this.timeFilter)
+        // this.tableFilter(this.movementType, this.currencyType, this.timeFilter)
+
       },
       error: (err) => {
         console.error(err); 
@@ -98,12 +98,12 @@ export class HistoryManangementComponent implements OnInit {
     this.manangementHistory.forEach((manangement) => {
 
       // Comprobación de que esté activada: 
-      if (manangement.his_status !== true) return; 
+      if (manangement.hw_status !== true) return; 
 
       this.totalAmount = this.totalAmount.map((ct: any) => {
         if (ct.cur_id === manangement.cur_id) {
-          if (manangement.his_type === "Ingreso") ct.total += manangement.his_amount;
-          else ct.total -= manangement.his_amount;
+          if (manangement.hw_type === "Ingreso") ct.total += manangement.hw_amount;
+          else ct.total -= manangement.hw_amount;
         };
         return ct;
       })
@@ -133,16 +133,16 @@ export class HistoryManangementComponent implements OnInit {
     const items = this.manangementHistory.filter( (item:any) => {
 
       // Filtrar por tipo de movimiento:
-      const isTypeMatch = mt === 'Movimiento' ? (item.his_type === 'Ingreso' || item.his_type === 'Egreso') : item.his_type === mt;
+      const isTypeMatch = mt === 'Movimiento' ? (item.hw_type === 'Ingreso' || item.hw_type === 'Egreso') : item.hw_type === mt;
 
       // Filtrar por tipo de moneda:
       const isCurrencyMatch = ct === 'Moneda' ? true : this.currencyTypes.some(cur => cur.cur_name === ct && cur.cur_id === item.cur_id)  
 
       // Filtrar por descripción:
-      const isDescriptionMatch = item.his_description.toLowerCase().includes(this.formTable.value.searchInput.toLowerCase());
+      const isDescriptionMatch = item.hw_description.toLowerCase().includes(this.formTable.value.searchInput.toLowerCase());
 
       // Filtrar por fecha dentro de la semana actual:
-      // const itemDate = new Date(item.his_date);
+      // const itemDate = new Date(item.hw_date);
       // const isDateMatch = time === 'Todo' || (itemDate >= startOfWeek && itemDate <= endOfWeek);
 
       return isTypeMatch && isCurrencyMatch && isDescriptionMatch;
@@ -209,7 +209,7 @@ export class HistoryManangementComponent implements OnInit {
     return `${day}/${month < 10 ? '0' : ''}${month}/20${year < 10 ? '0' : ''}${year}`;
   }
   
-  public onClickDelete = async(his_id: number, his_amount: number, his_type: string) => {
+  public onClickDelete = async(hw_id: number, hw_amount: number, hw_type: string) => {
     Swal.fire({
       icon: 'warning',
       background: 'var(--secondary-color)',
@@ -218,7 +218,7 @@ export class HistoryManangementComponent implements OnInit {
 
     Swal.fire({
       title: "¿Estás seguro?",
-      text: `Estás por eliminar el $${his_type} con un monto de ${his_amount}`,
+      text: `Estás por eliminar el $${hw_type} con un monto de ${hw_amount}`,
       icon: "warning",
       background: 'var(--secondary-color)',
       color: 'var(--light-color)',
@@ -229,7 +229,7 @@ export class HistoryManangementComponent implements OnInit {
       reverseButtons: true
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const result = (await this.manangementService.deleteManangement(his_id)).subscribe({
+        const result = (await this.manangementService.deleteManangement(hw_id)).subscribe({
           next: (data) => {
             this.totalAmount = this.currencyTypes.map((cur: Currency) => ({ cur_id: cur.cur_id, cur_name: cur.cur_name, total: 0,}))
             this._getAllManangement();
@@ -246,37 +246,38 @@ export class HistoryManangementComponent implements OnInit {
     
   };
 
-  public onClickModify(his_id: number) {
+  public onClickModify(hw_id: number) {
     this.showModal = true;
-    this._manangementSelected = his_id; 
-    const manangement = this.manangementHistory.find((his: any) => his.his_id === his_id);
+    this._manangementSelected = hw_id; 
+    const manangement = this.manangementHistory.find((his: any) => his.hw_id === hw_id);
     this.onClickCurrency(manangement.cur_id);
-    this.onClickType(manangement.his_type);
+    this.onClickType(manangement.hw_type);
     this.formManangement.patchValue({
-      his_amount: manangement.his_amount,
-      his_description: manangement.his_description
+      hw_amount: manangement.hw_amount,
+      hw_description: manangement.hw_description
     });
   };
+
 
   /* ---------------- Actualizar movimiento --------------------- */
   private _initForm(): FormGroup<any> {
     return this.formManangement = this.formBuilder.group({
-      his_amount: ['', Validators.required],
-      his_description: ['', Validators.required],
+      hw_amount: ['', Validators.required],
+      hw_description: ['', Validators.required],
       cur_id: [null,Validators.required],
-      his_type: [null,Validators.required]
+      hw_type: [null,Validators.required]
     })
   }
 
   public formatCurrency() {
-    let inputValue = this.formManangement.get('his_amount')!.value;
+    let inputValue = this.formManangement.get('hw_amount')!.value;
     if (inputValue === null) {
       return; 
     }
   
     inputValue = parseFloat(inputValue).toFixed(2);
     inputValue = inputValue.replace(',', '.');
-    this.formManangement.patchValue({ his_amount: inputValue }, { emitEvent: false });
+    this.formManangement.patchValue({ hw_amount: inputValue }, { emitEvent: false });
   };
 
   public onClickCurrency(id: number) {
@@ -286,12 +287,16 @@ export class HistoryManangementComponent implements OnInit {
 
   public onClickType(type: string) {
     this.spanType = type;
-    this.formManangement.get('his_type')?.setValue(type);
+    this.formManangement.get('hw_type')?.setValue(type);
   }
 
   public onClickCancel() {
     this.showModal = false;
     this.formManangement.reset();
+  }
+
+  public onClickMigrate() {
+
   }
 
   public async submitForm() {
@@ -302,21 +307,23 @@ export class HistoryManangementComponent implements OnInit {
     if (this.formManangement.valid === false)  return this.spinnerLoader = false, this._alert(2, 'Error', 'Faltan campos por rellenar') ;
 
     // Número negativo: 
-    if (this.formManangement.value.his_amount <= 0) return this.spinnerLoader = false, this._alert(2, 'Error', 'El monto no puede ser negativo o cero'); 
+    if (this.formManangement.value.hw_amount <= 0) return this.spinnerLoader = false, this._alert(2, 'Error', 'El monto no puede ser negativo o cero'); 
 
     const usu_id = Number(localStorage.getItem('usu_id'))
 
     const userName = this.returnUserName(usu_id);
 
-    const currentDescription = this.formManangement.value.his_description;
+    const currentDescription = this.formManangement.value.hw_description;
     const updatedDescription = `${currentDescription} (Modificado por: ${userName})`;
 
     const manangement = {
-      his_amount: Number(this.formManangement.value.his_amount),
-      his_description: updatedDescription,
-      his_type: this.formManangement.value.his_type,
+      hw_amount: Number(this.formManangement.value.hw_amount),
+      hw_description: updatedDescription,
+      hw_type: this.formManangement.value.hw_type,
       cur_id: this.formManangement.value.cur_id,
     }
+
+
 
     const result = (await this.manangementService.updateManangement(manangement, this._manangementSelected, usu_id)).subscribe({
       next: (data) => { 
@@ -345,10 +352,18 @@ export class HistoryManangementComponent implements OnInit {
       confirmButtonColor: "var(--main-color)",
     });
   }
+
+  public async migrateData() {
+    const result = (await this.manangementService.goToGeneral()).subscribe({
+      next: (data) => {
+        this._alert(1, 'Datos migrados', 'Se migraron los datos correctamente');
+        this._getAllManangement();
+      },
+      error: (err) => {
+        this._alert(2, 'Error', 'Error al migrar los datos, intente de nuevo más tarde.');
+        console.error(err);
+      }
+    })
+  }
+
 }
-
-
-
-
-
-

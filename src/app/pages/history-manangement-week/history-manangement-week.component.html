@@ -33,18 +33,21 @@
               <!-- <th>Acción</th> -->
           </tr>
           <tr *ngFor="let mov of manangementHistoryFiltered.reverse()">
-              <td>$ {{mov.his_amount}} {{returnCurrencyName(mov.cur_id)}}</td>
-              <td>{{mov.his_type}}</td>
-              <td>{{mov.his_description}}</td>
+              <td>$ {{mov.hw_amount}} {{returnCurrencyName(mov.cur_id)}}</td>
+              <td>{{mov.hw_type}}</td>
+              <td>{{mov.hw_description}}</td>
               <td>{{returnUserName(mov.usu_id)}}</td>
-              <td>{{formatDate(mov.his_date)}}</td>
+              <td>{{formatDate(mov.hw_date)}}</td>
               <!-- <td class="cont-action"> 
-                <button (click)="onClickModify(mov.his_id)" class="btn-action"><i class="ph-light ph-pencil-simple icon-action"></i></button>
-                <button (click)="onClickDelete(mov.his_id, mov.his_type, mov.his_amount)" class="btn-action"><i class="ph-light ph-trash icon-action"></i></button>
+                <button (click)="onClickModify(mov.hw_id)" class="btn-action"><i class="ph-light ph-pencil-simple icon-action"></i></button>
+                <button (click)="onClickDelete(mov.hw_id, mov.hw_type, mov.hw_amount)" class="btn-action"><i class="ph-light ph-trash icon-action"></i></button>
               </td> -->
 
           </tr>
       </table>
+        <div class="contn-formt-btn">
+          <button (click)="migrateData()" class="btn-filter">Migrar Datos</button>
+        </div>
     </div>
 
     <div *ngIf="manangementHistoryFiltered.length < 1" class="cont-not-news">
@@ -58,17 +61,17 @@
   
     <div class="cont-input">
       <span class="text-input">Monto</span>
-      <label for="his_amount" class="lb-input">
+      <label for="hw_amount" class="lb-input">
         <i class="ph-light ph-money icon-form"></i>
-        <input (blur)="formatCurrency()" id="his_amount" formControlName="his_amount" name="his_amount" type="number" class="input-form">
+        <input (blur)="formatCurrency()" id="hw_amount" formControlName="hw_amount" name="hw_amount" type="number" class="input-form">
       </label>
     </div>
 
     <div class="cont-input">
       <span class="text-input">Descripción</span>
-      <label for="his_description" class="lb-input">
+      <label for="hw_description" class="lb-input">
         <i class="ph-light ph-chat-text icon-form"></i>
-        <input id="his_description" formControlName="his_description" name="his_description" type="text" class="input-form">
+        <input id="hw_description" formControlName="hw_description" name="hw_description" type="text" class="input-form">
       </label>
     </div>
 
@@ -87,8 +90,8 @@
 
     <div class="cont-input">
       <span class="text-input">Tipo</span>
-      <label for="his_type" class="input-dropdown lb-input">
-        <input id="his_type"  name="his_type" type="checkbox" class="input-form input-checkbox">
+      <label for="hw_type" class="input-dropdown lb-input">
+        <input id="hw_type"  name="hw_type" type="checkbox" class="input-form input-checkbox">
         <div class="cont-dropdown">
           <span (click)="onClickType('Ingreso')" class="item-dropdown">Ingreso</span>
           <span (click)="onClickType('Egreso')" class="item-dropdown">Egreso</span>
@@ -110,4 +113,5 @@
       </button>
     </div>
   </form>
+
 </div>

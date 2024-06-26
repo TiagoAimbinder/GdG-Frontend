@@ -24,6 +24,9 @@ export class ExpensesComponent implements OnInit {
   public expSelected: number | undefined;
   public modifyModal: boolean = false; 
 
+  public totalCost : number = 0;
+  public totalAmount: number = 0;
+
   public showModal: boolean = false; 
   public formExpense: FormGroup = this._initForm();
   public spinnerLoader: boolean = false;
@@ -48,11 +51,21 @@ export class ExpensesComponent implements OnInit {
       next: (res) => {
         console.log('asd', res)
         this.expenses = res.expenses.filter((exp: any) => exp.cat_id === this.cat_id);
+        this.amountTotal();
       },
       error: (err) => {
         this._alert(2, "Error", "Error al traer los items de la categoría. Por favor, intente más tarde.");
         console.error(err);
       }
+    })
+  }
+
+  public amountTotal() {
+    this.totalCost = 0;
+    this.totalAmount = 0;
+    this.expenses.forEach((elem:any) => {
+      this.totalCost += elem.exp_amount;
+      this.totalAmount += this.calcVta(elem.exp_amount, elem.exp_percentVta);
     })
   }
 
@@ -77,6 +90,7 @@ export class ExpensesComponent implements OnInit {
   public calcVta(amount: number, percent: number) {
     return ((amount * percent)/100) + amount;
   };
+
 
 
 

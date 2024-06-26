@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +9,24 @@ import { RouterLink } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
-  
+
+  showIngresosEgresos: boolean = true; // Bandera para controlar la visibilidad del botón
+  centerButton: boolean = false; // Centrar el botón
+
+
+  constructor(private router: Router) { }
+
+  ngOnInit(): void {
+    const role_id = Number(localStorage.getItem('role_id'));
+
+    // Verificar el role_id para decidir si mostrar el botón Ingresos - Egresos
+    if (role_id === 2) {
+      this.showIngresosEgresos = false;
+      this.centerButton = true; // Centrar el botón de Costos
+
+    }
+  }
+
 }

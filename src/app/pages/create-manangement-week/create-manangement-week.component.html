@@ -1,0 +1,67 @@
+<app-navbar/>
+<main >
+  <section class="cont-create">
+    <h1 class="title">
+      Crear Ingresos | Egresos Semanal
+    </h1>
+
+    <form [formGroup]="formManangement" action="" class="cont-form">
+      
+      <div class="cont-input">
+        <span class="text-input">Fecha</span>
+        <label for="hw_date" class="lb-input">
+          <i class="ph-light ph-calendar-dots icon-form"></i>
+          <input [disabled]="true" id="hw_date" formControlName="hw_date" name="hw_date" type="text" class="input-form" readonly>
+        </label>
+      </div>
+
+      <div class="cont-input">
+        <span class="text-input">Monto</span>
+        <label for="hw_amount" class="lb-input">
+          <i class="ph-light ph-money icon-form"></i>
+          <input (blur)="formatCurrency()" id="hw_amount" formControlName="hw_amount" name="hw_amount" type="number" class="input-form">
+        </label>
+      </div>
+
+      <div class="cont-input">
+        <span class="text-input">Descripción</span>
+        <label for="hw_description" class="lb-input">
+          <i class="ph-light ph-chat-text icon-form"></i>
+          <input id="hw_description" formControlName="hw_description" name="hw_description" type="text" class="input-form">
+        </label>
+      </div>
+
+      <div class="cont-input">
+        <span class="text-input">Tipo de moneda</span>
+        <label for="cur_id" class="input-dropdown lb-input">
+          <input id="cur_id"  name="cur_id" type="checkbox" class="input-form input-checkbox">
+          <div class="cont-dropdown">
+            <span (click)="onClickCurrency(cur.cur_id)" *ngFor="let cur of currencyTypes" class="item-dropdown">{{cur.cur_name}}</span>
+          </div>
+          <i class="ph-light ph-coin icon-form"></i>
+          <span class="input-form">{{spanTypeCurrency}}</span>
+          <i class="ph-light ph-caret-down icon-arrow"></i>
+        </label>
+      </div>
+
+      <div class="cont-input">
+        <span class="text-input">Tipo</span>
+        <label for="hw_type" class="input-dropdown lb-input">
+          <input id="hw_type"  name="hw_type" type="checkbox" class="input-form input-checkbox">
+          <div class="cont-dropdown">
+            <span (click)="onClickType(1)" class="item-dropdown">Ingreso</span>
+            <span (click)="onClickType(2)" class="item-dropdown">Egreso</span>
+          </div>
+          <i class="ph-light ph-arrows-out-line-horizontal icon-form"></i>
+          <span class="input-form">{{spanType}}</span>
+          <i class="ph-light ph-caret-down icon-arrow"></i>
+        </label>
+      </div>
+
+      <button [disabled]="spinnerLoader === true" (click)="submitForm()" class="btn-form">
+        <span *ngIf="spinnerLoader === false">Aceptar</span>
+        <span *ngIf="spinnerLoader === true" class="loader"></span>
+      </button>
+    </form>
+  </section>
+</main>
