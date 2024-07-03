@@ -132,6 +132,9 @@ export class HistoryManangementWeekComponent implements OnInit {
 
     const items = this.manangementHistory.filter( (item:any) => {
 
+      this.totalAmount = this.currencyTypes.map((cur: Currency) => ({ cur_id: cur.cur_id, cur_name: cur.cur_name, total: 0, }));
+
+
       // Filtrar por tipo de movimiento:
       const isTypeMatch = mt === 'Movimiento' ? (item.hw_type === 'Ingreso' || item.hw_type === 'Egreso') : item.hw_type === mt;
 
@@ -149,6 +152,19 @@ export class HistoryManangementWeekComponent implements OnInit {
     })
 
     this.manangementHistoryFiltered = items;
+
+    items.forEach((manangement) => {
+      if (manangement.hw_status !== true) return;
+
+      this.totalAmount = this.totalAmount.map((ct: any) => {
+        if (ct.cur_id === manangement.cur_id) {
+          if (manangement.hw_type === "Ingreso") ct.total += manangement.hw_amount;
+          else ct.total -= manangement.hw_amount;
+        };
+        return ct;
+      })
+    });
+
   };
 
   // Función para obtener el lunes de la semana actual:

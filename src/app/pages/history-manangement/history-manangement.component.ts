@@ -121,6 +121,9 @@ export class HistoryManangementComponent implements OnInit {
   // ---- Filtro para buscar  
   public tableFilter(mt: string, ct: string, time: string) {
 
+    this.totalAmount = this.currencyTypes.map((cur: Currency) => ({ cur_id: cur.cur_id, cur_name: cur.cur_name, total: 0, }));
+
+
     // let startOfWeek: Date;
     // let endOfWeek: Date;
     
@@ -149,6 +152,18 @@ export class HistoryManangementComponent implements OnInit {
     })
 
     this.manangementHistoryFiltered = items;
+
+    items.forEach((manangement) => {
+      if (manangement.his_status !== true) return;
+
+      this.totalAmount = this.totalAmount.map((ct: any) => {
+        if (ct.cur_id === manangement.cur_id) {
+          if (manangement.his_type === "Ingreso") ct.total += manangement.his_amount;
+          else ct.total -= manangement.his_amount;
+        };
+        return ct;
+      })
+    });
   };
 
   // Función para obtener el lunes de la semana actual:
