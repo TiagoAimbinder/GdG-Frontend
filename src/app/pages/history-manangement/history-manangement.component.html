@@ -17,7 +17,7 @@
 
     <div class="cont-total-amount">
       <div *ngFor="let total of totalAmount" class="cont-total">
-        <span class="total-amount">${{total.total}} {{total.cur_name}}</span>
+        <span class="total-amount">${{total.total | number:'1.0-0' }} {{total.cur_name}}</span>
       </div>
     </div>
 
@@ -33,7 +33,7 @@
               <!-- <th>Acción</th> -->
           </tr>
           <tr *ngFor="let mov of manangementHistoryFiltered.reverse()">
-              <td>$ {{mov.his_amount}} {{returnCurrencyName(mov.cur_id)}}</td>
+              <td>$ {{mov.his_amount | number:'1.0-0'}} {{returnCurrencyName(mov.cur_id)}}</td>
               <td>{{mov.his_type}}</td>
               <td>{{mov.his_description}}</td>
               <td>{{returnUserName(mov.usu_id)}}</td>

@@ -3,11 +3,13 @@ import { InMemoryScrollingFeature, InMemoryScrollingOptions, PreloadAllModules, 
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { DecimalPipe, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginGuard } from './core/guards/login.guard';
 import { PanelGuard } from './core/guards/panel.guard';
+import { LOCALE_ID } from '@angular/core';
+
 
 
 // Scroll to top - Navbar sections changes: 
@@ -25,6 +27,9 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, inMemoryScrollingFeature, withPreloading(PreloadAllModules)),
     provideClientHydration(), // SSR (Server Side Rendering)
     importProvidersFrom(HttpClientModule,BrowserAnimationsModule),
-    { provide: LocationStrategy, useClass: HashLocationStrategy }, // Add # to URL -  Enable Location Strategy
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: LOCALE_ID, useValue: 'es-ES' }, // Add # to URL -  Enable Location Strategy
+    DecimalPipe
   ]
+
 };

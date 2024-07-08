@@ -7,6 +7,7 @@ import { UserService } from 'src/app/core/services/UserService/user.service';
 import { CurrencyService } from 'src/app/core/services/CurrencyService/currency.service';
 import { Currency, CurrencyTotal } from 'src/app/core/models/currency.models';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-history-manangement',
@@ -42,7 +43,7 @@ export class HistoryManangementComponent implements OnInit {
   public showModal: boolean = false;
   private _manangementSelected: any; 
 
-  constructor(private formBuilder: FormBuilder, private manangementService: ManangementServiceService, private userService: UserService, private currencyService: CurrencyService) {
+  constructor(private formBuilder: FormBuilder, private manangementService: ManangementServiceService, private userService: UserService, private currencyService: CurrencyService, private decimalPipe: DecimalPipe) {
 
   }
 
