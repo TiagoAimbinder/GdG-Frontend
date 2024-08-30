@@ -40,6 +40,8 @@ export class CategoriesComponent implements OnInit{
     return this.formBuilder.group({
       cat_name: ['', Validators.required],
       cat_id: [''],
+      cat_color: [''] // Valor por defecto para el color de la categoría
+
     });
   }
 
@@ -57,7 +59,8 @@ export class CategoriesComponent implements OnInit{
     const usu_id = Number(localStorage.getItem('usu_id'));
 
     const categorys = {
-      cat_name: this.formCategory.value.cat_name
+      cat_name: this.formCategory.value.cat_name,
+      cat_color: this.formCategory.value.cat_color
     }
 
     const result = (await this.categoriesService.updateCategory(categorys,this._categoriesSelected, usu_id)).subscribe({
@@ -85,7 +88,8 @@ export class CategoriesComponent implements OnInit{
 
     const categorys2 = {
       cat_name: this.formCategoryCreate.value.cat_name,
-      usu_id: usu_id
+      usu_id: usu_id,
+      cat_color: this.formCategoryCreate.value.cat_color
     }
     
     const result2 = (await this.categoriesService.createCategories(categorys2)).subscribe({
@@ -154,7 +158,9 @@ export class CategoriesComponent implements OnInit{
     const categorys = this.categories.find((cat: any) => cat.cat_id === cat_id);
     this.formCategory.patchValue({
       cat_id: categorys.cat_id,
-      cat_name: categorys.cat_name
+      cat_name: categorys.cat_name,
+      cat_color: categorys.cat_color
+
     });
 
   }

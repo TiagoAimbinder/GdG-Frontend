@@ -8,7 +8,7 @@
         <div class="table-container">
             <table>
                 <tr *ngFor="let cat of categories" >
-                    <div class="content-category">
+                    <div class="content-category" [style.background]="cat.cat_color">
                         <td>{{ cat.cat_name.length > 15 ? cat.cat_name.substring(0, 15) + '...' : cat.cat_name }}</td>
                         <td class="cont-action"> 
                             <button routerLink="/categoria/{{cat.cat_id}}" class="btn-action"><i class="ph-light ph-arrow-fat-right icon-action"></i></button>
@@ -38,6 +38,13 @@
             </label>
         </div>
 
+        <div class="cont-input">
+            <span class="text-input">Color</span>
+            <label for="cat_color" class="lb-input">
+              <input id="cat_color" formControlName="cat_color" type="color" class="input-form color" >
+            </label>
+        </div>
+
         <div class="cont-btn-form">
             <button (click)="onClickCancel()" class="btn-form cancel">
               Cancelar
@@ -60,6 +67,13 @@
             <label for="cat_name_create" class="lb-input">
               <i class="ph-light ph-chat-text icon-form"></i>
               <input id="cat_name_create" formControlName="cat_name" name="cat_name" type="text" class="input-form">
+            </label>
+        </div>
+
+        <div class="cont-input">
+            <span class="text-input">Color</span>
+            <label for="cat_color" class="lb-input">
+              <input id="cat_color" formControlName="cat_color" type="color" class="input-form color">
             </label>
         </div>
 

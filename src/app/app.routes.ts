@@ -13,6 +13,12 @@ export const routes: Routes = [
   { path: 'categoria/:cat_id', loadComponent: () => import('./pages/expenses/expenses.component').then(m => m.ExpensesComponent), canActivate: [LoginGuard]},
   { path: 'migrate', loadComponent: () => import('./pages/history-manangement-week/history-manangement-week.component').then(m => m.HistoryManangementWeekComponent), canActivate: [LoginGuard]},
   { path: 'categoria', loadComponent: () => import('./pages/categories/categories.component').then(m => m.CategoriesComponent), canActivate: [LoginGuard]},
+  { path: 'ventas', loadComponent: () => import('./pages/units-sold/units-sold.component').then(m => m.UnitsSoldComponent), canActivate: [LoginGuard]},
+  // { path: 'ventas/crear', loadComponent: () => import('./pages/units-sold/units-sold.component').then(m => m.UnitsSoldComponent), canActivate: [LoginGuard]},
+  { path: 'ventas/historial', loadComponent: () => import('./pages/units-sold/units-sold.component').then(m => m.UnitsSoldComponent), canActivate: [LoginGuard]},
+
+
+
 
 
   { path: '', redirectTo: 'inicio', pathMatch: 'full' }, 
