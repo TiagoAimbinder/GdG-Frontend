@@ -18,8 +18,13 @@ export class UnitsSoldService {
     return headers; 
   }
 
-  unitsSoldCreate = async (categories: any) : Promise<Observable<any>> => {
-    const urlApi = environment.const_url_server + endpoints.createCategories; 
-    return this.http.post(urlApi, categories, { headers: this.headers() });
+  unitsSoldCreate = async (unitsSold: any) : Promise<Observable<any>> => {
+    const urlApi = environment.const_url_server + endpoints.createsaleHistory; 
+    return this.http.post(urlApi, unitsSold, { headers: this.headers() });
+  }
+
+  unitsSoldGetAll = async (usu_id: number) : Promise<Observable<any>> => {
+    const urlApi = environment.const_url_server + endpoints.getAllsaleHistory + '?usu_id=' + usu_id;  
+    return this.http.get(urlApi, { headers: this.headers() });
   }
 }

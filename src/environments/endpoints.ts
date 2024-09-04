@@ -17,8 +17,6 @@ export enum endpoints {
   manangementWeekMigrate = "/manangementweek/migrate",
 
 
-
-
   // ---- CurrencyType: 
   getAllCurrencyTypes = "/currency/getAll",
 
@@ -37,6 +35,11 @@ export enum endpoints {
   deleteExpense = '/expenses/delete',
   createExpense = '/expenses/create',
   updateExpense = '/expenses/update',
+
+  // ---- UnitsSold
+  createsaleHistory = '/saleHistory/create',
+  getAllsaleHistory = '/saleHistory/getMonthly'
+
 
 
 }
