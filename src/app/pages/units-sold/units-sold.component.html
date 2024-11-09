@@ -18,7 +18,9 @@
           <span class="text-input">Fecha</span>
           <label for="sal_date" class="lb-input">
             <i class="ph-light ph-calendar-dots icon-form"></i>
-            <input [disabled]="true" id="sal_date" formControlName="sal_date" name="sal_date" type="text" class="input-form" readonly>
+            <span class="input-form">
+              {{_formatDate()}}
+            </span>
             <!-- <input id="sal_amount" formControlName="sal_amount" type="number" class="input-form"> -->
           </label>
         </div>
@@ -36,6 +38,19 @@
             <label for="sal_quantity" class="lb-input">
               <input id="sal_quantity" formControlName="sal_quantity" type="number" class="input-form">
             </label>
+        </div>
+
+        <div class="cont-input">
+          <span class="text-input">Tipo</span>
+          <select formControlName="sal_type" name="category" id="category" class="input-option">
+            <option [value]="null" *ngIf="formUnitsSoldCreate.value.sal_type === null" class="option">Tipo Venta</option>
+            <option [value]="1" class="option">
+                Ingreso
+            </option>
+            <option [value]="2" class="option">
+              Egreso
+          </option>
+        </select>
         </div>
 
         <div class="cont-btn-form">

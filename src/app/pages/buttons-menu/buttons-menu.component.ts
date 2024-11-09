@@ -13,10 +13,19 @@ import { Router, RouterLink } from '@angular/router';
 export class ButtonsMenuComponent implements OnInit {
 
   public showDiv: string = ''; 
+  showIngresosEgresos: boolean = true; // Bandera para controlar la visibilidad del botón
+
 
   constructor(private router: Router) { }; 
 
   ngOnInit(): void {
     this.showDiv = (this.router.url);
+
+    const role_id = Number(localStorage.getItem('role_id'));
+
+    // Verificar el role_id para decidir si mostrar el botón Ingresos - Egresos
+    if (role_id === 2) {
+      this.showIngresosEgresos = false;
+    }
   }
 }

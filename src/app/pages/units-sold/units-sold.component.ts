@@ -39,7 +39,7 @@ export class UnitsSoldComponent {
 
       sal_name: ['', Validators.required],
       sal_quantity: ['' , Validators.required],
-      sal_date: [this._formatDate(), Validators.required],
+      sal_type: [null, Validators.required]
 
     })
 
@@ -85,7 +85,7 @@ export class UnitsSoldComponent {
       usu_id: usu_id, 
       sal_name: this.formUnitsSoldCreate.value.sal_name,
       sal_quantity: this.formUnitsSoldCreate.value.sal_quantity,
-      sal_date: this.fecha,
+      sal_type: this.formUnitsSoldCreate.value.sal_type
   
     }
     
@@ -105,7 +105,7 @@ export class UnitsSoldComponent {
     
   }
 
-  private _formatDate() {
+  public _formatDate() {
     const date = new Date; 
     this.fecha = date; 
     return date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: '2-digit' }).replace(/\//g, '/');

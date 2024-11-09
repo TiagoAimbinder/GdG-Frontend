@@ -27,4 +27,10 @@ export class UnitsSoldService {
     const urlApi = environment.const_url_server + endpoints.getAllsaleHistory + '?usu_id=' + usu_id;  
     return this.http.get(urlApi, { headers: this.headers() });
   }
+
+  unitsSoldGetTotals = async (usu_id: number) : Promise<Observable<any>> => {
+    const urlApi = environment.const_url_server + endpoints.getsaleHistoryTotal + '?usu_id=' + usu_id;  
+    return this.http.get(urlApi, { headers: this.headers() });
+  }
 }
+

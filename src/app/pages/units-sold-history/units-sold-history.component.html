@@ -7,12 +7,16 @@
                     <th>Fecha</th>
                     <th>Venta</th>
                     <th>Cantidad</th>
+                    <th>Tipo</th>
+
                     <!-- <th>Acción</th> -->
                 </tr>
                 <tr *ngFor="let mov of saleHistoryFiltered.reverse()">
                     <td>{{_formatDate(mov.sal_date)}}</td>
                     <td>{{mov.sal_name}}</td>
                     <td>{{mov.sal_quantity}}</td>
+                    <td>{{mov.sal_type==1 ? 'Ingreso' : 'Egreso'}}</td>
+
                     <!-- <td class="cont-action"> 
                       <button (click)="onClickModify(mov.his_id)" class="btn-action"><i class="ph-light ph-pencil-simple icon-action"></i></button>
                       <button (click)="onClickDelete(mov.his_id, mov.his_type, mov.his_amount)" class="btn-action"><i class="ph-light ph-trash icon-action"></i></button>
@@ -25,4 +29,29 @@
           <div *ngIf="saleHistoryFiltered.length < 1" class="cont-not-news">
               <span class="not-movement">No hay movimientos creados.</span>
           </div>
+
+          <div class="cont-stats" *ngIf="isSaleHistoryTotalsEmpty()">
+
+
+            <span class="text-stats">
+              Total General: {{ saleHistoryTotals.total_general| number:'1.2-2'}}
+            </span>
+            <span class="text-stats">
+                Total Mensual: {{ saleHistoryTotals.total_mensual| number:'1.2-2'}}
+            </span>
+            <span class="text-stats">
+                Total Semanal: {{ saleHistoryTotals.total_semanal| number:'1.2-2'}}
+            </span>
+            <span class="text-stats">
+                Promedio Diario General: {{ saleHistoryTotals.promedio_diario_general| number:'1.2-2'}}
+            </span>
+            <span class="text-stats">
+                Promedio Diario Mensual: {{ saleHistoryTotals.promedio_diario_mensual| number:'1.2-2'}}
+            </span>
+            <span class="text-stats">
+                Promedio Diario Semanal: {{ saleHistoryTotals.promedio_diario_semanal| number:'1.2-2'}}
+            </span>
+
+        </div>
+
 </main>

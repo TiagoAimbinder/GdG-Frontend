@@ -12,21 +12,17 @@ import { Router, RouterLink } from '@angular/router';
 export class HomeComponent implements OnInit {
 
 
-  showIngresosEgresos: boolean = true; // Bandera para controlar la visibilidad del botón
-  centerButton: boolean = false; // Centrar el botón
+  //showIngresosEgresos: boolean = true; // Bandera para controlar la visibilidad del botón
 
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    const role_id = Number(localStorage.getItem('role_id'));
+    //const role_id = Number(localStorage.getItem('role_id'));
 
     // Verificar el role_id para decidir si mostrar el botón Ingresos - Egresos
-    if (role_id === 2) {
-      this.showIngresosEgresos = false;
-      this.centerButton = true; // Centrar el botón de Costos
-
+    //if (role_id === 2) {
+      //this.showIngresosEgresos = false;
     }
-  }
 
-}
+  }

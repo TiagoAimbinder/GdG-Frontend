@@ -14,18 +14,39 @@ export class UnitsSoldHistoryComponent implements OnInit{
 
   public saleHistoryFiltered: any[] = [];
   public saleHistory: any[] = [];
+  public saleHistoryTotals: any = []
+
 
   constructor( private UnitsSoldService : UnitsSoldService) { }; 
 
   
 
   ngOnInit(): void {
-    this._getAllCategories()
+    this._getAllCategories();
+    this.getTotalsSaleHistory()
   }
 
   public _formatDate(fecha: string) {
     const date = new Date(fecha)
     return date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: '2-digit' }).replace(/\//g, '/');
+  }
+
+  private getTotalsSaleHistory = async () => {
+    const usu_id = Number(localStorage.getItem('usu_id'));
+
+    (await this.UnitsSoldService.unitsSoldGetTotals(usu_id)).subscribe({
+      next: (data) => {
+        this.saleHistoryTotals = data.totals;
+
+      },
+      error: (err) => {
+        console.error('Error fetching s:', err);
+        this.saleHistoryTotals = [];
+
+      }
+    });
+
+
   }
 
   private _getAllCategories = async () => {
@@ -37,11 +58,6 @@ export class UnitsSoldHistoryComponent implements OnInit{
         this.saleHistory = data.sales;
         this.saleHistoryFiltered = data.sales;
 
-        console.log(data.sales)
-
-        // console.log(this.saleHistories)
-        // console.log(data)
-
       },
       error: (err) => {
         console.error('Error fetching s:', err);
@@ -51,5 +67,10 @@ export class UnitsSoldHistoryComponent implements OnInit{
       }
     });
   }
+
+  isSaleHistoryTotalsEmpty(): boolean {
+    return Object.keys(this.saleHistoryTotals).length > 0;
+  }
+  
 
 }
