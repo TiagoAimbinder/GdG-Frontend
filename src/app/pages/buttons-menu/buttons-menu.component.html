@@ -4,9 +4,9 @@
   <section class="cont">
 
     <div *ngIf="showDiv === '/gestion' " class="cont-btns">
-      <button routerLink="/gestion/crear" class="btn">Crear Ingreso | Egreso General</button>
+      <button  *ngIf="showIngresosEgresos"  routerLink="/gestion/crear" class="btn">Crear Ingreso | Egreso General</button>
       <button routerLink="/gestion/historial" class="btn">Ver historial General</button>
-      <button routerLink="/gestion/crearsemanal" class="btn">Crear Ingreso | Egreso Semanal</button>
+      <button  *ngIf="showIngresosEgresos" routerLink="/gestion/crearsemanal" class="btn">Crear Ingreso | Egreso Semanal</button>
       <button routerLink="/gestion/historialsemanal" class="btn">Ver historial Semanal</button>
       
     </div>

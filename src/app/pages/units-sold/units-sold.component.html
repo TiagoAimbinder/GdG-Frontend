@@ -4,7 +4,8 @@
   <section class="cont">
 
     <div *ngIf="showDiv === '/ventas' " class="cont-btns">
-      <button routerLink="/ventas/crear" class="btn">Crear</button>
+      <button (click)="onClickAddSale()" class="btn">Agregar cantidad de combos vendidos</button>
+      <!-- <button routerLink="/ventas/crear" class="btn">Crear</button> -->
       <button routerLink="/ventas/historial" class="btn">Historial unidades vendidas</button>
     </div>
 
@@ -14,18 +15,42 @@
     <form [formGroup]="formUnitsSoldCreate" action="" class="cont-form">
 
         <div class="cont-input">
+          <span class="text-input">Fecha</span>
+          <label for="sal_date" class="lb-input">
+            <i class="ph-light ph-calendar-dots icon-form"></i>
+            <span class="input-form">
+              {{_formatDate()}}
+            </span>
+            <!-- <input id="sal_amount" formControlName="sal_amount" type="number" class="input-form"> -->
+          </label>
+        </div>
+
+        <div class="cont-input">
             <span class="text-input">Nombre</span>
-            <label for="cat_name_create" class="lb-input">
+            <label for="sal_name_create" class="lb-input">
               <i class="ph-light ph-chat-text icon-form"></i>
-              <input id="cat_name_create" formControlName="cat_name" name="cat_name" type="text" class="input-form">
+              <input id="sal_name_create" formControlName="sal_name" name="sal_name" type="text" class="input-form">
             </label>
         </div>
 
         <div class="cont-input">
-            <span class="text-input">Color</span>
-            <label for="cat_color" class="lb-input">
-              <input id="cat_color" formControlName="cat_color" type="color" class="input-form color">
+            <span class="text-input">Cantidad</span>
+            <label for="sal_quantity" class="lb-input">
+              <input id="sal_quantity" formControlName="sal_quantity" type="number" class="input-form">
             </label>
+        </div>
+
+        <div class="cont-input">
+          <span class="text-input">Tipo</span>
+          <select formControlName="sal_type" name="category" id="category" class="input-option">
+            <option [value]="null" *ngIf="formUnitsSoldCreate.value.sal_type === null" class="option">Tipo Venta</option>
+            <option [value]="1" class="option">
+                Ingreso
+            </option>
+            <option [value]="2" class="option">
+              Egreso
+          </option>
+        </select>
         </div>
 
         <div class="cont-btn-form">
@@ -40,6 +65,10 @@
         </div>
 
     </form>
+</div>
+
+<div>
+  
 </div>
 
 </main>

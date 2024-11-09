@@ -22,18 +22,24 @@ export class UnitsSoldComponent {
   public formUnitsSoldCreate : FormGroup = this._initForm();
   public spinnerLoader: boolean = false;
   public users: any[] = [];
-
-
+  public fecha: any;
+  public saleHistories : any[] = [] ;
 
 
   constructor(private router: Router, private formBuilder: FormBuilder, private UnitsSoldService : UnitsSoldService) { }; 
 
   ngOnInit(): void {
     this.showDiv = (this.router.url);
+    console.log(this.showDiv)
+    this._getAllCategories()
   }
 
   private _initForm() : FormGroup<any> {
     return this.formBuilder.group({
+
+      sal_name: ['', Validators.required],
+      sal_quantity: ['' , Validators.required],
+      sal_type: [null, Validators.required]
 
     })
 
@@ -44,6 +50,29 @@ export class UnitsSoldComponent {
     return name ? name.usu_name : 'Unknown';
   }
 
+
+
+  
+  private _getAllCategories = async () => {
+
+    const usu_id = Number(localStorage.getItem('usu_id'));
+
+    (await this.UnitsSoldService.unitsSoldGetAll(usu_id)).subscribe({
+      next: (data) => {
+        this.saleHistories = data.sales;
+        // console.log(this.saleHistories)
+        // console.log(data)
+
+      },
+      error: (err) => {
+        console.error('Error fetching s:', err);
+        this.saleHistories = [];
+      }
+    });
+  }
+
+  
+
   public async submitFormCreate() {
 
     this.spinnerLoader = true;
@@ -53,17 +82,22 @@ export class UnitsSoldComponent {
     const usu_id = Number(localStorage.getItem('usu_id'));
 
     const unitsSold = {
+      usu_id: usu_id, 
+      sal_name: this.formUnitsSoldCreate.value.sal_name,
+      sal_quantity: this.formUnitsSoldCreate.value.sal_quantity,
+      sal_type: this.formUnitsSoldCreate.value.sal_type
   
     }
     
     const result2 = (await this.UnitsSoldService.unitsSoldCreate(unitsSold)).subscribe({
       next: (data) => {
-        this._alert(1, 'Categoria creada', 'Se creo la categoria correctamente');
+        this._alert(1, 'Venta creada', 'Se creo la venta correctamente');
         this.showModalCreate = false;
         this.spinnerLoader = false;
+        this._resetForm();
       },
       error: (err) => {
-        this._alert(2, 'Error', 'No se pudo crear la categoria');
+        this._alert(2, 'Error', 'No se pudo crear la venta');
         console.log(err);
         this.spinnerLoader = false;
       }
@@ -71,10 +105,34 @@ export class UnitsSoldComponent {
     
   }
 
+  public _formatDate() {
+    const date = new Date; 
+    this.fecha = date; 
+    return date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: '2-digit' }).replace(/\//g, '/');
+  }
+
+  onClickAddSale(){
+    this.showModalCreate = true;
+    this.formUnitsSoldCreate.reset ({
+      sal_date: this._formatDate()
+    })
+  }
+
+
   onClickCancel(){
     this.showModalCreate = false;
     this.formUnitsSoldCreate.reset();
   }
+
+  private _resetForm() {
+    this.formUnitsSoldCreate.reset({
+      sal_date: this._formatDate(),
+      sal_quantity: '',
+      sal_name: '',
+    });
+  }
+
+
 
   private _alert = (type: number, title: string, text: string) => {
     Swal.fire({

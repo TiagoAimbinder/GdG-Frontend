@@ -7,14 +7,14 @@
     </header>
 
     <div class="cont-grid">
-      <div *ngIf="showIngresosEgresos" routerLink="/gestion" class="cont-link ing-egr">
+      <div  routerLink="/gestion" class="cont-link ing-egr">
         <div class="cont-info">
           <i class="ph-fill ph-wallet icon"></i>
           <span class="text-link">Ingresos - Egresos</span>
         </div>
       </div>
 
-      <div routerLink="/categoria" class="cont-link gastos"  [ngClass]="{'centered': centerButton}">
+      <div routerLink="/categoria" class="cont-link gastos" >
         <div class="cont-info">
           <i class="ph-fill ph-currency-dollar-simple icon"></i>
           <span class="text-link">Costos</span>
