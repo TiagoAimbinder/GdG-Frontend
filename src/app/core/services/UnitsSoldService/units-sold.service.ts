@@ -24,13 +24,16 @@ export class UnitsSoldService {
   }
 
   unitsSoldGetAll = async (usu_id: number) : Promise<Observable<any>> => {
-    const urlApi = environment.const_url_server + endpoints.getAllsaleHistory + '?usu_id=' + usu_id;  
+    const urlApi = environment.const_url_server + endpoints.getAllsaleHistory + '?usu_id=' + usu_id ;  
     return this.http.get(urlApi, { headers: this.headers() });
   }
 
-  unitsSoldGetTotals = async (usu_id: number) : Promise<Observable<any>> => {
-    const urlApi = environment.const_url_server + endpoints.getsaleHistoryTotal + '?usu_id=' + usu_id;  
+  unitsSoldGetTotals = async (usu_id: number, local: number | null): Promise<Observable<any>> => {
+    let urlApi = `${environment.const_url_server}${endpoints.getsaleHistoryTotal}?usu_id=${usu_id}`;
+    if (local !== null && local !== undefined) {
+        urlApi += `&local=${local}`;
+    }
     return this.http.get(urlApi, { headers: this.headers() });
-  }
+};
 }
 

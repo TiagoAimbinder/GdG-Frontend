@@ -1,5 +1,9 @@
 <app-navbar/>
 <main>
+
+      <div class="cont-filters">
+        <button (click)="onFilterLocal()" class="btn-filter">{{localType}}</button>
+    </div>
         <!-- Container Table -->
         <div *ngIf="saleHistoryFiltered.length >= 1" class="cont-table">
             <table>
@@ -8,6 +12,7 @@
                     <th>Venta</th>
                     <th>Cantidad</th>
                     <th>Tipo</th>
+                    <th>Local</th>
 
                     <!-- <th>Acción</th> -->
                 </tr>
@@ -16,6 +21,7 @@
                     <td>{{mov.sal_name}}</td>
                     <td>{{mov.sal_quantity}}</td>
                     <td>{{mov.sal_type==1 ? 'Ingreso' : 'Egreso'}}</td>
+                    <td>{{mov.sal_local==1 ? 'Eddie Costa' : 'Eddie Centro'}}</td>
 
                     <!-- <td class="cont-action"> 
                       <button (click)="onClickModify(mov.his_id)" class="btn-action"><i class="ph-light ph-pencil-simple icon-action"></i></button>

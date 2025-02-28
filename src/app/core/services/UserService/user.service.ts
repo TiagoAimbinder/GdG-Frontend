@@ -20,6 +20,7 @@ export class UserService {
   }
 
   validateToken(usu_id: number, usu_token: string | null) {
+    console.log(usu_token)
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${usu_token}`
     });

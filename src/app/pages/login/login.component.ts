@@ -63,7 +63,7 @@ export class LoginComponent {
     this.loginService.Login(user).subscribe({
       next: (Response: any) => {
         this.btndisabled = false;
-        localStorage.setItem('usu_token', Response.token);
+        localStorage.setItem('usu_token', Response.usu_token);
         localStorage.setItem('usu_id', Response.usu_id);
         localStorage.setItem('role_id', Response.role_id);
         this.router.navigate(['/inicio']);

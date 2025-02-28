@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
 import { NavbarComponent } from 'src/app/core/components/navbar/navbar.component';
@@ -24,6 +25,8 @@ export class UnitsSoldComponent {
   public users: any[] = [];
   public fecha: any;
   public saleHistories : any[] = [] ;
+  public selectedLocal: string = '';  // Esta propiedad almacena el local seleccionado
+
 
 
   constructor(private router: Router, private formBuilder: FormBuilder, private UnitsSoldService : UnitsSoldService) { }; 
@@ -39,7 +42,8 @@ export class UnitsSoldComponent {
 
       sal_name: ['', Validators.required],
       sal_quantity: ['' , Validators.required],
-      sal_type: [null, Validators.required]
+      sal_type: [null, Validators.required],
+      sal_local: [null, Validators.required]
 
     })
 
@@ -85,7 +89,8 @@ export class UnitsSoldComponent {
       usu_id: usu_id, 
       sal_name: this.formUnitsSoldCreate.value.sal_name,
       sal_quantity: this.formUnitsSoldCreate.value.sal_quantity,
-      sal_type: this.formUnitsSoldCreate.value.sal_type
+      sal_type: this.formUnitsSoldCreate.value.sal_type,
+      sal_local: this.formUnitsSoldCreate.value.sal_local
   
     }
     
@@ -129,6 +134,7 @@ export class UnitsSoldComponent {
       sal_date: this._formatDate(),
       sal_quantity: '',
       sal_name: '',
+      sal_local: ''
     });
   }
 

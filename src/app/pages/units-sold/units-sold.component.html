@@ -53,6 +53,21 @@
         </select>
         </div>
 
+        <div class="cont-input">
+          <span class="text-input">Local</span>
+          <select formControlName="sal_local" name="category" id="category" class="input-option">
+            <option [value]="null" *ngIf="formUnitsSoldCreate.value.sal_local === null" class="option">Elegir Local</option>
+            <option [value]=1 class="option">
+                Eddie Costa
+            </option>
+            <option [value]=2 class="option">
+              Eddie Centro
+          </option>
+        </select>
+        </div>
+
+
+
         <div class="cont-btn-form">
             <button (click)="onClickCancel()" class="btn-form cancel">
               Cancelar

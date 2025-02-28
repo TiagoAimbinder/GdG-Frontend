@@ -19,6 +19,7 @@ export class LoginGuard implements CanActivate {
     }
 
     const usu_token = localStorage.getItem('usu_token');
+    console.log(usu_token)
 
     // 2. Si existe la sesión, verifico la validez del token: 
     return (this.userService.validateToken(usu_id, usu_token)).pipe(
