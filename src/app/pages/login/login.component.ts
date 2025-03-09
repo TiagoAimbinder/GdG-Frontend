@@ -39,7 +39,7 @@ export class LoginComponent {
     this.btndisabled = true;
 
     if (this.formLogin.valid === false) {
-      console.log("Formulario Invalido");
+
       this.btndisabled = false;
 
       Swal.fire({
@@ -66,6 +66,7 @@ export class LoginComponent {
         localStorage.setItem('usu_token', Response.usu_token);
         localStorage.setItem('usu_id', Response.usu_id);
         localStorage.setItem('role_id', Response.role_id);
+
         this.router.navigate(['/inicio']);
       },
       error: (err) => {
