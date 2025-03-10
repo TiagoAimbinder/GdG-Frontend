@@ -4,7 +4,9 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class LoginGuard implements CanActivate {
+export class 
+
+LoginGuard implements CanActivate {
 
   constructor(private userService: UserService, private router: Router) {}
 
