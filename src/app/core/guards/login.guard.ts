@@ -12,7 +12,6 @@ export class LoginGuard implements CanActivate {
 
     // 1. Si no existe la sesión (usu_id = 0) - No dejo entrar:
     let usu_id: any = Number(localStorage.getItem('usu_id') || 0);
-
     
     if (usu_id === 0){
       localStorage.clear()
@@ -32,6 +31,7 @@ export class LoginGuard implements CanActivate {
         return false;
       }),
       catchError( (err) => {
+        console.log(err)
         localStorage.clear();
         this.router.navigate(['/login'])
         return of(false);
