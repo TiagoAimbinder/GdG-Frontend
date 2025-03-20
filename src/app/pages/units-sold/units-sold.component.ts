@@ -64,8 +64,6 @@ export class UnitsSoldComponent {
     (await this.UnitsSoldService.unitsSoldGetAll(usu_id)).subscribe({
       next: (data) => {
         this.saleHistories = data.sales;
-        // console.log(this.saleHistories)
-        // console.log(data)
 
       },
       error: (err) => {

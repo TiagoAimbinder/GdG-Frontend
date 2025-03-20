@@ -2,7 +2,7 @@
 <main>
 
       <div class="cont-filters">
-        <button (click)="onFilterLocal()" class="btn-filter">{{localType}}</button>
+        <button (click)="onFilterLocal()" class="btn-filter">{{selectedLocal ? selectedLocal.name: "General"}}</button>
     </div>
         <!-- Container Table -->
         <div *ngIf="saleHistoryFiltered.length >= 1" class="cont-table">
@@ -36,28 +36,30 @@
               <span class="not-movement">No hay movimientos creados.</span>
           </div>
 
-          <div class="cont-stats" *ngIf="isSaleHistoryTotalsEmpty()">
+          <div class="cont-stats" >
 
 
             <span class="text-stats">
-              Total General: {{ saleHistoryTotals.total_general| number:'1.2-2'}}
+              Total General: {{ totals() ? totals().total_general: "0"| number:'1.2-2'}}
             </span>
             <span class="text-stats">
-                Total Mensual: {{ saleHistoryTotals.total_mensual| number:'1.2-2'}}
+                Total Mensual: {{ totals() ? totals().total_mensual: "0"| number:'1.2-2'}}
             </span>
             <span class="text-stats">
-                Total Semanal: {{ saleHistoryTotals.total_semanal| number:'1.2-2'}}
+                Total Semanal: {{ totals() ? totals().total_semanal: "0"| number:'1.2-2'}}
             </span>
             <span class="text-stats">
-                Promedio Diario General: {{ saleHistoryTotals.promedio_diario_general| number:'1.2-2'}}
+                Promedio Diario General: {{ totals() ? totals().promedio_diario_general: "0"| number:'1.2-2'}}
             </span>
             <span class="text-stats">
-                Promedio Diario Mensual: {{ saleHistoryTotals.promedio_diario_mensual| number:'1.2-2'}}
+                Promedio Diario Mensual: {{ totals() ? totals().promedio_diario_mensual: "0"| number:'1.2-2'}}
             </span>
             <span class="text-stats">
-                Promedio Diario Semanal: {{ saleHistoryTotals.promedio_diario_semanal| number:'1.2-2'}}
+                Promedio Diario Semanal: {{ totals() ? totals().promedio_diario_semanal: "0"| number:'1.2-2'}}
             </span>
 
         </div>
+
+        
 
 </main>

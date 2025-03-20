@@ -108,7 +108,7 @@ export class CreateManangementWeekComponent implements OnInit {
   private _getAllCurrency = async () => {
     const currency = (await this.currencyService.getAllCurrency()).subscribe({
       next: (res) => {
-        this.currencyTypes = res.currency;
+        this.currencyTypes = res.data;
       },
       error: (err) => {
         this._alert(2, 'Error', 'Error al obtener los tipos de moneda');

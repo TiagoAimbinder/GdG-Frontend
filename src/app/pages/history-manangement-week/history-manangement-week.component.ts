@@ -83,7 +83,7 @@ export class HistoryManangementWeekComponent implements OnInit {
   private _getAllCurrencyTypes = async () => {
     (await this.currencyService.getAllCurrency()).subscribe({
       next: (data) => {
-        this.currencyTypes = data.currency;
+        this.currencyTypes = data.data;
         this.totalAmount = this.currencyTypes.map((cur: Currency) => ({ cur_id: cur.cur_id, cur_name: cur.cur_name, total: 0,}))
         this._getAllUsers();
 

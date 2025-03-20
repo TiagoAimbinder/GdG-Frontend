@@ -14,6 +14,7 @@ LoginGuard implements CanActivate {
 
     // 1. Si no existe la sesión (usu_id = 0) - No dejo entrar:
     let usu_id: any = Number(localStorage.getItem('usu_id') || 0);
+    
     if (usu_id === 0){
       localStorage.clear()
       this.router.navigate(['/login'])
@@ -21,19 +22,18 @@ LoginGuard implements CanActivate {
     }
 
     const usu_token = localStorage.getItem('usu_token');
-    console.log(usu_token)
+  
 
     // 2. Si existe la sesión, verifico la validez del token: 
     return (this.userService.validateToken(usu_id, usu_token)).pipe(
       map( (res:any) => {
-        if (res.valid) {
-          return true;
-        };
+        if (res.success) { return true };
         localStorage.clear();
         this.router.navigate(['/login'])
         return false;
       }),
       catchError( (err) => {
+        console.log(err)
         localStorage.clear();
         this.router.navigate(['/login'])
         return of(false);
